@@ -1,9 +1,9 @@
 <script lang="ts" setup></script>
 
 <template>
-	<div>
+	<div class="h-screen flex flex-col">
 		<header>
-			<h1 id="title">Octopus</h1>
+			<h1 id="title" class="font-bold text-6xl">Octopus</h1>
 			<img src="/Logo-Kyburz.svg" alt="Kyburz Logo" id="logo" />
 		</header>
 		<NuxtPage />
@@ -12,16 +12,16 @@
 
 <style scoped>
 header {
-	background: #c4c2c2;
+	background: var(--header_background);
 	padding: 0.1rem 2rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	height: 80px;
 }
 
 #title {
-	font-size: 50px;
-	color: rgb(23, 65, 152);
+	color: var(--logo_text_color);
 }
 
 #logo {
