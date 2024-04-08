@@ -4,9 +4,17 @@ import { ref } from 'vue'
 const username = ref('')
 const password = ref('')
 
-function say(username, password) {
-    alert(username)
-    alert(password)
+const loginInvalid = ref('')
+
+function login() {
+    if (username.value != "Test" || password.value != "123") {
+        loginInvalid.value = "Benutzername oder Passwort ungültig"
+        return
+    }
+    if (loginInvalid.value != "") {
+        loginInvalid.value = ""
+    }
+    return navigateTo("/overview")
 }
 
 </script>
@@ -14,12 +22,16 @@ function say(username, password) {
 <template>
     <Main>
         <Card title="Login">
-            <form class="w-ful">
-                <TextInput label="Username" placeholder="Enter Username" />
-                <TextInput label="Password" placeholder="Enter Password" />
+            <InputError :condition="loginInvalid" :text="loginInvalid" />
+            <form @submit.prevent="login" class="w-full">
+                <TextInput type="text" label="Benutzername" placeholder="Benutzername eingeben" v-model="username"
+                    required />
+                <TextInput type="password" label="Passwort" placeholder="Passwort eingeben" v-model="password"
+                    required />
                 <div class="p-2">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
-                        @click="say(username, password)">Login</button>
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded-lg w-full"
+                        @submit="login()">Login</button>
                 </div>
             </form>
         </Card>
