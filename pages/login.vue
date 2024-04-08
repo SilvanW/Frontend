@@ -20,7 +20,7 @@ function login() {
 </script>
 
 <template>
-    <Main>
+    <div class="flex-1 flex flex-col justify-center items-center flex-nowrap">
         <Card title="Login">
             <InputError :condition="loginInvalid" :text="loginInvalid" />
             <form @submit.prevent="login" class="w-full">
@@ -35,5 +35,5 @@ function login() {
                 </div>
             </form>
         </Card>
-    </Main>
+    </div>
 </template>
