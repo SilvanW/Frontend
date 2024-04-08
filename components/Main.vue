@@ -1,5 +1,5 @@
 <template>
-    <main class="flex-1 flex flex-col justify-center items-center flex-nowrap">
+    <main class="flex-1 flex flex-row justify-begin items-start flex-wrap">
         <slot />
     </main>
 </template>
