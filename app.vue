@@ -18,7 +18,8 @@ useHead({
   --main_background: rgb(244, 244, 244);
 
   --red: rgb(255, 27, 28);
-  --orange: rgb(255, 165, 0)
+  --orange: rgb(255, 165, 0);
+  --blue: rgb(0, 0, 255);
 }
 
 body {
