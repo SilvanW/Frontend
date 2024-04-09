@@ -3,7 +3,7 @@ defineProps(["title", "subtitle"])
 </script>
 
 <template>
-    <div class="list p-2 my-2 rounded-lg text-left">
+    <div class="list p-2 my-2 rounded-lg text-left cursor-pointer">
         <h2 class="font-bold text-lg">
             {{ title }}
         </h2>
