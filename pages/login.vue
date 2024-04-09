@@ -17,10 +17,14 @@ function login() {
     return navigateTo("/overview")
 }
 
+definePageMeta({
+    layout: 'start'
+})
+
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col justify-center items-center flex-nowrap">
+    <div class="main-background flex-1 flex flex-col justify-center items-center flex-nowrap">
         <Card title="Login">
             <InputError :condition="loginInvalid" :text="loginInvalid" />
             <form @submit.prevent="login" class="w-full">
@@ -37,3 +41,9 @@ function login() {
         </Card>
     </div>
 </template>
+
+<style scoped>
+.main-background {
+    background-color: var(--main_background)
+}
+</style>
