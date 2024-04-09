@@ -34,3 +34,9 @@ const items = ref(
         </Card>
     </Main>
 </template>
+
+<style scoped>
+.list-container {
+    max-height: 300px;
+}
+</style>
