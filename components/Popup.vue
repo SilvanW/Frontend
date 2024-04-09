@@ -9,7 +9,7 @@ const model = defineModel()
         <div class="popup rounded-lg m-2">
             <div class="flex flex-row justify-between items-center p-2">
                 <h2 class="title p-2 font-medium text-2xl">{{ title }}</h2>
-                <Icon v-on:click="model = false" class="burger-icon cursor-pointer" name="fa6-solid:xmark"
+                <Icon v-on:click="model = false" class="popup-icon cursor-pointer" name="fa6-solid:xmark"
                     size="1.5em" />
             </div>
 
@@ -34,7 +34,7 @@ const model = defineModel()
     color: var(--logo_text_color)
 }
 
-.burger-icon {
+.popup-icon {
     color: var(--red)
 }
 </style>
