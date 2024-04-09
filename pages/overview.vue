@@ -1,3 +1,7 @@
+<script setup>
+const showPopup = ref(false)
+</script>
+
 <template>
     <Main>
         <Card title="Willkommen">
@@ -17,7 +21,11 @@
                 <TextOutput label="Funktion" value="Developer" />
                 <TextOutput label="Berechtigung" value="Administrator" />
                 <TextOutput label="IP-Addresse" value="10.242.2.2" />
+                <ButtonAdd v-on:click="showPopup = true" label="Show Popup" />
             </div>
         </Card>
     </Main>
+    <Popup v-model="showPopup" v-if="showPopup" title="Popup">
+        <h1>Very important Popup message</h1>
+    </Popup>
 </template>
