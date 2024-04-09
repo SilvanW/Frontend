@@ -1,13 +1,16 @@
 <script lang="ts" setup>
 
+const supabase = useSupabaseClient()
+
 const showNav = ref(false)
 
 function toggleNav() {
 	showNav.value = !showNav.value
 }
 
-function logout() {
+async function logout() {
 	toggleNav()
+	const { error } = await supabase.auth.signOut()
 	navigateTo("/login")
 }
 
