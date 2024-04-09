@@ -3,8 +3,8 @@ defineProps(["title"])
 </script>
 
 <template>
-    <div class="rounded-lg p-2.5 shadow-md card m-2.5">
-        <h2 class="title p-2 font-bold text-2xl">{{ title }}</h2>
+    <div class="rounded-lg p-2.5 shadow-md card ml-2.5 mt-2.5">
+        <h2 class="title p-2 font-medium text-2xl">{{ title }}</h2>
         <slot />
     </div>
 </template>
