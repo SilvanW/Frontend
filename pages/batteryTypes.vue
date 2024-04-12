@@ -9,15 +9,22 @@ const showProperties = ref(false)
 const items = ref([])
 
 // Read Items from Database
-const { data: battery_data, error: battery_error } = await supabase.from("battery").select(`
+const { data: battery_data, error: battery_error } = await supabase.from("batteries").select(`
     id,
     type,
-    battery_manufacturers (id, name)
+    battery_manufacturers (id, name),
+    battery_chemistries (id, name),
+    nominalCapacity,
+    nominalWeight,
+    length,
+    width,
+    height
 `)
 
 if (battery_error) {
     console.log(battery_error)
 } else {
+    console.log(battery_data)
     items.value = battery_data
 }
 
@@ -38,24 +45,35 @@ if (battery_manufacturer_error) {
     }
 }
 
+const chemistryOptions = []
+
+// Read Battery Chemistires
+const { data: battery_chemistries_data, error: battery_chemistries_error } = await supabase.from("battery_chemistries").select()
+
+if (battery_chemistries_error) {
+    console.log(battery_chemistries_error)
+} else {
+    for (let index in battery_chemistries_data) {
+        let battery_chemistry = battery_chemistries_data[index]
+        chemistryOptions.push({
+            "value": battery_chemistry.id,
+            "text": battery_chemistry.name
+        })
+    }
+}
+
 const batteryData = ref(
     {
         "type": "",
         "manufacturer": manufacturerOptions[0].value,
-        "cellChemistry": 0
+        "cellChemistry": chemistryOptions[0].value,
+        "nominalCapacity": 0,
+        "nominalWeight": 0,
+        "length": 0,
+        "width": 0,
+        "height": 0
     }
 )
-
-const chemistryOptions = [
-    {
-        "value": 0,
-        "text": "LFP"
-    },
-    {
-        "value": 1,
-        "text": "NMC"
-    }
-]
 
 function addBattery() {
     showNewBattery.value = false
@@ -71,7 +89,12 @@ function showBatteryContent(item) {
     batteryData.value = {
         "type": item.type,
         "manufacturer": item.battery_manufacturers.id,
-        "cellChemistry": 0
+        "cellChemistry": item.battery_chemistries.id,
+        "nominalCapacity": item.nominalCapacity,
+        "nominalWeight": item.nominalWeight,
+        "length": item.length,
+        "width": item.width,
+        "height": item.height
     }
 }
 
@@ -105,11 +128,13 @@ function showBatteryContent(item) {
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />
                 <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie" :options="chemistryOptions" />
-                <TextInput label="Nominalkapazität [Ah]" placeholder="Nominalkapazität" />
-                <TextInput label="Nominalgewicht [g]" placeholder="Nominalgewicht" />
-                <TextInput label="Länge [mm]" placeholder="Länge" />
-                <TextInput label="Breite [mm]" placeholder="Breite" />
-                <TextInput label="Höhe [mm]" placeholder="Höhe" />
+                <TextInput v-model="batteryData.nominalCapacity" label="Nominalkapazität [Ah]"
+                    placeholder="Nominalkapazität" />
+                <TextInput v-model="batteryData.nominalWeight" label="Nominalgewicht [g]"
+                    placeholder="Nominalgewicht" />
+                <TextInput v-model="batteryData.length" label="Länge [mm]" placeholder="Länge" />
+                <TextInput v-model="batteryData.width" label="Breite [mm]" placeholder="Breite" />
+                <TextInput v-model="batteryData.height" label="Höhe [mm]" placeholder="Höhe" />
                 <ButtonChange type="submit" @submit="updateBattery()" label="Batterie Ändern" />
             </form>
         </Card>
