@@ -13,13 +13,6 @@ const logInWithUsername = async () => {
         console.log(error)
         loginInvalid.value = "Benutzername oder Passwort ungültig"
     } else {
-        const { data, error } = await supabase.from("battery").select()
-
-        if (error) {
-            console.log(error)
-        }
-
-        console.log(data)
         return navigateTo("/overview")
     }
 }
