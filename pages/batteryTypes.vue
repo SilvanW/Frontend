@@ -6,6 +6,8 @@ const supabase = useSupabaseClient()
 const showNewBattery = ref(false)
 const showProperties = ref(false)
 
+const inputValid = ref(false)
+
 const items = ref([])
 
 // Read Items from Database
@@ -24,7 +26,6 @@ const { data: battery_data, error: battery_error } = await supabase.from("batter
 if (battery_error) {
     console.log(battery_error)
 } else {
-    console.log(battery_data)
     items.value = battery_data
 }
 
@@ -64,6 +65,7 @@ if (battery_chemistries_error) {
 
 const batteryData = ref(
     {
+        "id": 0,
         "type": "",
         "manufacturer": manufacturerOptions[0].value,
         "cellChemistry": chemistryOptions[0].value,
@@ -75,11 +77,31 @@ const batteryData = ref(
     }
 )
 
-function addBattery() {
+async function addBattery() {
+    const { error } = await supabase.from("batteries").insert(
+        {
+            "type": batteryData.value.type,
+            "manufacturer": batteryData.value.manufacturer,
+            "chemistry": batteryData.value.cellChemistry,
+            "nominalCapacity": batteryData.value.nominalCapacity,
+            "nominalWeight": batteryData.value.nominalWeight,
+            "length": batteryData.value.length,
+            "width": batteryData.value.width,
+            "height": batteryData.value.height
+        }
+    )
+
+    if (error) {
+        console.log(error)
+        inputValid.value = true
+        return
+    }
+
     showNewBattery.value = false
 }
 
 function updateBattery() {
+    alert("Update")
     alert("Not Implemented")
 }
 
@@ -87,6 +109,7 @@ function showBatteryContent(item) {
     showProperties.value = true
 
     batteryData.value = {
+        "id": item.id,
         "type": item.type,
         "manufacturer": item.battery_manufacturers.id,
         "cellChemistry": item.battery_chemistries.id,
@@ -96,6 +119,16 @@ function showBatteryContent(item) {
         "width": item.width,
         "height": item.height
     }
+}
+
+async function deleteBattery() {
+    const { error } = await supabase.from("batteries").delete().eq('id', parseInt(batteryData.value.id))
+
+    if (error) {
+        console.log(error)
+    }
+
+    showProperties.value = false
 }
 
 </script>
@@ -112,19 +145,22 @@ function showBatteryContent(item) {
         </Card>
         <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" closable="true">
             <form @submit.prevent="addBattery">
+                <InputError :condition="inputValid" text="Werte konnten nicht abgespeichert werden" />
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" required />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />
                 <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie" :options="chemistryOptions" />
-                <TextInput label="Nominalkapazität [Ah]" placeholder="Nominalkapazität" />
-                <TextInput label="Nominalgewicht [g]" placeholder="Nominalgewicht" />
-                <TextInput label="Länge [mm]" placeholder="Länge" />
-                <TextInput label="Breite [mm]" placeholder="Breite" />
-                <TextInput label="Höhe [mm]" placeholder="Höhe" />
+                <TextInput v-model="batteryData.nominalCapacity" label="Nominalkapazität [Ah]"
+                    placeholder="Nominalkapazität" />
+                <TextInput v-model="batteryData.nominalWeight" label="Nominalgewicht [g]"
+                    placeholder="Nominalgewicht" />
+                <TextInput v-model="batteryData.length" label="Länge [mm]" placeholder="Länge" />
+                <TextInput v-model="batteryData.width" label="Breite [mm]" placeholder="Breite" />
+                <TextInput v-model="batteryData.height" label="Höhe [mm]" placeholder="Höhe" />
                 <ButtonAdd type="submit" @submit="addBattery()" label="Batterie Erstellen" />
             </form>
         </Card>
         <Card v-model="showProperties" v-if="showProperties" title="Eigenschaften" closable="true">
-            <form @submit.prevent="updateBattery">
+            <form>
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />
                 <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie" :options="chemistryOptions" />
@@ -135,7 +171,8 @@ function showBatteryContent(item) {
                 <TextInput v-model="batteryData.length" label="Länge [mm]" placeholder="Länge" />
                 <TextInput v-model="batteryData.width" label="Breite [mm]" placeholder="Breite" />
                 <TextInput v-model="batteryData.height" label="Höhe [mm]" placeholder="Höhe" />
-                <ButtonChange type="submit" @submit="updateBattery()" label="Batterie Ändern" />
+                <ButtonChange v-on:click="updateBattery()" label="Batterie Ändern" />
+                <ButtonDelete v-on:click="deleteBattery()" label="Batterie löschen" />
             </form>
         </Card>
     </Main>
