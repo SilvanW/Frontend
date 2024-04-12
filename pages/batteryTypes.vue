@@ -1,10 +1,23 @@
 <script setup>
 
+function showNotification(condition, time = 3000) {
+    function remove() {
+        condition.value = false
+    }
+    condition.value = true
+    setTimeout(remove, time)
+}
+
 const supabase = useSupabaseClient()
 
-// Define initial State
+// Define initial Card State
 const showNewBattery = ref(false)
 const showProperties = ref(false)
+
+// Notifications
+const showBatteryAdded = ref(false)
+const showBatteryDeleted = ref(false)
+const showBatteryUpdated = ref(false)
 
 const inputValid = ref(false)
 
@@ -97,12 +110,9 @@ async function addBattery() {
         return
     }
 
-    showNewBattery.value = false
-}
+    showNotification(showBatteryAdded)
 
-function updateBattery() {
-    alert("Update")
-    alert("Not Implemented")
+    showNewBattery.value = false
 }
 
 function showBatteryContent(item) {
@@ -119,14 +129,40 @@ function showBatteryContent(item) {
         "width": item.width,
         "height": item.height
     }
+
 }
 
-async function deleteBattery() {
-    const { error } = await supabase.from("batteries").delete().eq('id', parseInt(batteryData.value.id))
+async function updateBattery() {
+    const { error } = await supabase.from("batteries").update(
+        {
+            "type": batteryData.value.type,
+            "manufacturer": batteryData.value.manufacturer,
+            "chemistry": batteryData.value.cellChemistry,
+            "nominalCapacity": batteryData.value.nominalCapacity,
+            "nominalWeight": batteryData.value.nominalWeight,
+            "length": batteryData.value.length,
+            "width": batteryData.value.width,
+            "height": batteryData.value.height
+        }
+    ).eq('id', batteryData.value.id)
 
     if (error) {
         console.log(error)
     }
+
+    showNotification(showBatteryUpdated)
+
+    showProperties.value = false
+}
+
+async function deleteBattery() {
+    const { error } = await supabase.from("batteries").delete().eq('id', batteryData.value.id)
+
+    if (error) {
+        console.log(error)
+    }
+
+    showNotification(showBatteryDeleted)
 
     showProperties.value = false
 }
@@ -135,6 +171,15 @@ async function deleteBattery() {
 
 <template>
     <Main>
+        <Transition>
+            <Notification v-if="showBatteryAdded" text="Batterie Hinzugefügt" />
+        </Transition>
+        <Transition>
+            <Notification v-if="showBatteryDeleted" text="Batterie Gelöscht" />
+        </Transition>
+        <Transition>
+            <Notification v-if="showBatteryUpdated" text="Batterie Geändert" />
+        </Transition>
         <Card title="Batterieliste">
             <div class="list-container overflow-auto">
                 <ListItem v-for="item in items" :title="item.type"
