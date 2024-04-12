@@ -13,7 +13,7 @@ const logInWithUsername = async () => {
         console.log(error)
         loginInvalid.value = "Benutzername oder Passwort ungültig"
     } else {
-        return navigateTo("/overview")
+        return navigateTo("/")
     }
 }
 
