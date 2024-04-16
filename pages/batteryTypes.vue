@@ -1,7 +1,7 @@
 <script setup>
 
 onMounted(() => {
-    read_batteries()
+    get_batteries()
 })
 
 function showNotification(condition, time = 3000) {
@@ -27,7 +27,7 @@ const inputValid = ref(false)
 
 const items = ref([])
 
-async function read_batteries() {
+async function get_batteries() {
     // Read Items from Database
     const { data: battery_data, error: battery_error } = await supabase.from("batteries").select(`
     id,
@@ -119,6 +119,8 @@ async function addBattery() {
     showNotification(showBatteryAdded)
 
     showNewBattery.value = false
+
+    get_batteries()
 }
 
 function showBatteryContent(item) {
@@ -159,6 +161,8 @@ async function updateBattery() {
     showNotification(showBatteryUpdated)
 
     showProperties.value = false
+
+    get_batteries()
 }
 
 async function deleteBattery() {
@@ -171,6 +175,8 @@ async function deleteBattery() {
     showNotification(showBatteryDeleted)
 
     showProperties.value = false
+
+    get_batteries()
 }
 
 </script>
