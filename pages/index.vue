@@ -16,7 +16,4 @@ const showPopup = ref(false)
             </div>
         </Card>
     </Main>
-    <Popup v-model="showPopup" v-if="showPopup" title="Popup">
-        <h1>Very important Popup message</h1>
-    </Popup>
 </template>
