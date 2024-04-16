@@ -1,5 +1,9 @@
 <script setup>
 
+onMounted(() => {
+    read_batteries()
+})
+
 function showNotification(condition, time = 3000) {
     function remove() {
         condition.value = false
@@ -23,8 +27,9 @@ const inputValid = ref(false)
 
 const items = ref([])
 
-// Read Items from Database
-const { data: battery_data, error: battery_error } = await supabase.from("batteries").select(`
+async function read_batteries() {
+    // Read Items from Database
+    const { data: battery_data, error: battery_error } = await supabase.from("batteries").select(`
     id,
     type,
     battery_manufacturers (id, name),
@@ -36,10 +41,11 @@ const { data: battery_data, error: battery_error } = await supabase.from("batter
     height
 `)
 
-if (battery_error) {
-    console.log(battery_error)
-} else {
-    items.value = battery_data
+    if (battery_error) {
+        console.log(battery_error)
+    } else {
+        items.value = battery_data
+    }
 }
 
 const manufacturerOptions = []
