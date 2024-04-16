@@ -73,3 +73,10 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+# Supabase
+
+## Environement
+
++ SUPABASE_URL
++ SUPABASE_KEY
