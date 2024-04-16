@@ -1,7 +1,3 @@
-<script setup>
-const showPopup = ref(false)
-</script>
-
 <template>
     <Main>
         <Card title="Willkommen">
