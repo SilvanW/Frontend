@@ -1,5 +1,9 @@
 <script setup>
 
+definePageMeta({
+    middleware: ["auth"]
+})
+
 onMounted(() => {
     get_batteries()
 })
