@@ -17,6 +17,7 @@ async function logout() {
 </script>
 
 <template>
+	<NuxtLoadingIndicator />
 	<div class="h-screen flex flex-col">
 		<header>
 			<div class="flex flex-row justify-center items-center">
