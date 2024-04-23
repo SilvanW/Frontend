@@ -20,7 +20,7 @@ const supabase = useSupabaseClient()
 
 // Define initial Card State
 const showNewBattery = ref(false)
-const showProperties = ref(false)
+const showBatteryProperties = ref(false)
 
 // Notifications
 const showBatteryAdded = ref(false)
@@ -128,7 +128,8 @@ async function addBattery() {
 }
 
 function showBatteryContent(item) {
-    showProperties.value = true
+    showBatteryProperties.value = true
+    showNewBattery.value = false
 
     batteryData.value = {
         "id": item.id,
@@ -164,7 +165,7 @@ async function updateBattery() {
 
     showNotification(showBatteryUpdated)
 
-    showProperties.value = false
+    showBatteryProperties.value = false
 
     get_batteries()
 }
@@ -178,13 +179,14 @@ async function deleteBattery() {
 
     showNotification(showBatteryDeleted)
 
-    showProperties.value = false
+    showBatteryProperties.value = false
 
     get_batteries()
 }
 
 function showNewBatteryCard() {
     showNewBattery.value = true
+    showBatteryProperties.value = false
     batteryData.value = {
         "id": 0,
         "type": "",
@@ -222,7 +224,6 @@ function showNewBatteryCard() {
         </Card>
         <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" closable="true">
             <form @submit.prevent="addBattery">
-                <InputError :condition="inputValid" text="Werte konnten nicht abgespeichert werden" />
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" required />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />
                 <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie" :options="chemistryOptions" />
@@ -237,7 +238,7 @@ function showNewBatteryCard() {
                     tooltip="Neuer Batterietyp erstellen" />
             </form>
         </Card>
-        <Card v-model="showProperties" v-if="showProperties" title="Eigenschaften" closable="true">
+        <Card v-model="showBatteryProperties" v-if="showBatteryProperties" title="Eigenschaften" closable="true">
             <form>
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />
