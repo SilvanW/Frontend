@@ -14,7 +14,7 @@ function navigatePage(target) {
     <div v-on:click="navigatePage(targetPage)"
         class="flex flex-row justify-left items-center p-2 hover:bg-blue-500 rounded-lg cursor-pointer mt-1">
         <Icon :name="icon" color="white" />
-        <h3 class="sidenav-text font-medium text-xl mx-2">{{ label }}</h3>
+        <h4 class="sidenav-text font-medium text-xl mx-2 my-0">{{ label }}</h4>
     </div>
 </template>
 

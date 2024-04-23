@@ -33,7 +33,7 @@ async function logout() {
 				target-page="/batteryTypes" />
 			<div v-on:click="logout()" class="flex flex-row justify-left items-center p-2 cursor-pointer">
 				<Icon name="fa6-solid:arrow-right-from-bracket" color="red" />
-				<h3 class="logout-text font-medium text-xl mx-2">Logout</h3>
+				<h3 class="logout-text font-medium text-xl mx-2 my-0">Logout</h3>
 			</div>
 		</div>
 		<NuxtPage />
