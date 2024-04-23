@@ -6,7 +6,17 @@
 
 <script setup lang="ts">
 useHead({
-  title: 'Octopus'
+  htmlAttrs: {
+    lang: "de",
+  },
+  title: 'Octopus',
+  link: [
+    {
+      "rel": "icon",
+      "type": "image/png",
+      "href": "Logo-Kyburz.svg"
+    }
+  ]
 })
 </script>
 
