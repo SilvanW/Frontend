@@ -183,6 +183,21 @@ async function deleteBattery() {
     get_batteries()
 }
 
+function showNewBatteryCard() {
+    showNewBattery.value = true
+    batteryData.value = {
+        "id": 0,
+        "type": "",
+        "manufacturer": manufacturerOptions[0].value,
+        "cellChemistry": chemistryOptions[0].value,
+        "nominalCapacity": 0,
+        "nominalWeight": 0,
+        "length": 0,
+        "width": 0,
+        "height": 0
+    }
+}
+
 </script>
 
 <template>
@@ -202,7 +217,7 @@ async function deleteBattery() {
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
                     v-on:click="showBatteryContent(item)" />
             </div>
-            <ButtonAdd v-on:click="showNewBattery = true" label="Neue Freigabe" tooltip="Neuer Batterietyp freigeben">
+            <ButtonAdd v-on:click="showNewBatteryCard()" label="Neue Freigabe" tooltip="Neuer Batterietyp freigeben">
             </ButtonAdd>
         </Card>
         <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" closable="true">
