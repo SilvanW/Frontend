@@ -4,10 +4,6 @@ definePageMeta({
     middleware: ["auth"]
 })
 
-onMounted(() => {
-    get_batteries()
-})
-
 function showNotification(condition, time = 3000) {
     function remove() {
         condition.value = false
@@ -199,6 +195,10 @@ function showNewBatteryCard() {
         "height": 0
     }
 }
+
+onMounted(() => {
+    get_batteries()
+})
 
 </script>
 
