@@ -4,12 +4,12 @@ defineProps(["title", "subtitle"])
 
 <template>
     <div class="list p-2 my-2 rounded-lg text-left cursor-pointer">
-        <h2 class="font-bold text-lg">
+        <h5 class="font-bold">
             {{ title }}
-        </h2>
-        <h3>
+        </h5>
+        <h6>
             {{ subtitle }}
-        </h3>
+        </h6>
     </div>
 </template>
 
