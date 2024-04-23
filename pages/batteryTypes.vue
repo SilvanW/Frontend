@@ -202,7 +202,8 @@ async function deleteBattery() {
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
                     v-on:click="showBatteryContent(item)" />
             </div>
-            <ButtonAdd v-on:click="showNewBattery = true" label="Neue Freigabe"></ButtonAdd>
+            <ButtonAdd v-on:click="showNewBattery = true" label="Neue Freigabe" tooltip="Neuer Batterietyp freigeben">
+            </ButtonAdd>
         </Card>
         <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" closable="true">
             <form @submit.prevent="addBattery">
@@ -217,7 +218,8 @@ async function deleteBattery() {
                 <TextInput v-model="batteryData.length" label="Länge [mm]" placeholder="Länge" />
                 <TextInput v-model="batteryData.width" label="Breite [mm]" placeholder="Breite" />
                 <TextInput v-model="batteryData.height" label="Höhe [mm]" placeholder="Höhe" />
-                <ButtonAdd type="submit" @submit="addBattery()" label="Batterie Erstellen" />
+                <ButtonAdd type="submit" @submit="addBattery()" label="Batterie Erstellen"
+                    tooltip="Neuer Batterietyp erstellen" />
             </form>
         </Card>
         <Card v-model="showProperties" v-if="showProperties" title="Eigenschaften" closable="true">
@@ -232,8 +234,8 @@ async function deleteBattery() {
                 <TextInput v-model="batteryData.length" label="Länge [mm]" placeholder="Länge" />
                 <TextInput v-model="batteryData.width" label="Breite [mm]" placeholder="Breite" />
                 <TextInput v-model="batteryData.height" label="Höhe [mm]" placeholder="Höhe" />
-                <ButtonChange v-on:click="updateBattery()" label="Batterie Ändern" />
-                <ButtonDelete v-on:click="deleteBattery()" label="Batterie löschen" />
+                <ButtonChange v-on:click="updateBattery()" label="Batterie Ändern" tooltip="Batterietyp ändern" />
+                <ButtonDelete v-on:click="deleteBattery()" label="Batterie löschen" tooltip="Batterietyp Löschen" />
             </form>
         </Card>
     </Main>
