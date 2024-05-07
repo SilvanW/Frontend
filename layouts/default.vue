@@ -27,7 +27,7 @@ async function logout() {
 			</div>
 			<img src="/Logo-Kyburz.svg" alt="Kyburz Logo" id="logo" />
 		</header>
-		<div v-show="showNav" class="sidenav fixed z-1 overflow-x-hidden duration-500 top-20 p-2">
+		<div v-show="showNav" class="sidenav fixed z-10 overflow-x-hidden duration-500 top-20 p-2">
 			<SidenavButton v-model="showNav" icon="fa6-solid:user" label="Meine Seite" target-page="/" />
 			<SidenavButton v-model="showNav" icon="fa6-solid:battery-full" label="Batterietypen"
 				target-page="/batteryTypes" />
