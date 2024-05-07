@@ -36,8 +36,7 @@ definePageMeta({
                 <TextInput type="email" label="Email" placeholder="Email eingeben" v-model="email" required />
                 <TextInput type="password" label="Passwort" placeholder="Passwort eingeben" v-model="password"
                     required />
-                <b-button type="submit" class="w-full p-2" button="primary"
-                    @submit="logInWithUsername()">Login</b-button>
+                <button class="btn btn-primary w-full" @submit="logInWithUsername()">Login</button>
             </form>
         </Card>
     </div>
