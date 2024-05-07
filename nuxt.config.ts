@@ -1,16 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@nuxtjs/supabase', 'usebootstrap'],
-  usebootstrap: {
-    bootstrap: {
-      prefix: ``
-    },
-    html: {
-      prefix: `B`
-    },
-  },
-  css: [
-    "bootstrap/scss/bootstrap.scss"
-  ]
+  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@nuxtjs/supabase'],
 })
