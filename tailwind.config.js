@@ -13,6 +13,8 @@ export default {
       {
         kyburz: {
           "primary": "#174198",
+          "warning": "#FFA500",
+          "error": "#FF1B1C"
         }
       }
     ]
