@@ -4,6 +4,18 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require("daisyui")
+  ],
+  daisyui: {
+    themes: [
+      "light",
+      {
+        kyburz: {
+          "primary": "#174198",
+        }
+      }
+    ]
+  }
 }
 
