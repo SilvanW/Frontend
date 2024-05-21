@@ -80,3 +80,9 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 + SUPABASE_URL
 + SUPABASE_KEY
+
+# Cypress
+
+```zsh
+pnpm cypress run
+```
