@@ -1,5 +1,7 @@
 <script setup>
 
+import { decode } from 'base64-arraybuffer'
+
 definePageMeta({
     middleware: ["auth"]
 })
@@ -26,6 +28,8 @@ const showBatteryUpdated = ref(false)
 const inputValid = ref(false)
 
 const items = ref([])
+
+const battery_image = defineModel()
 
 async function get_batteries() {
     // Read Items from Database
@@ -116,6 +120,8 @@ async function addBattery() {
         return
     }
 
+    storeImage()
+
     showNotification(showBatteryAdded)
 
     showNewBattery.value = false
@@ -196,6 +202,24 @@ function showNewBatteryCard() {
     }
 }
 
+const { handleFileInput, files } = useFileStorage()
+
+async function storeImage() {
+
+    const base64_string = files.value[0].content.split('base64,')[1]
+
+    console.log(base64_string)
+
+    const { data, error } = await supabase.storage.from("battery_types").upload("private/test.png", decode(base64_string), {
+        contentType: "image/png"
+    })
+
+    if (error) {
+        console.log("Store Image error")
+        console.log(error)
+    }
+}
+
 onMounted(() => {
     get_batteries()
 })
@@ -234,6 +258,7 @@ onMounted(() => {
                 <TextInput v-model="batteryData.length" label="Länge [mm]" placeholder="Länge" />
                 <TextInput v-model="batteryData.width" label="Breite [mm]" placeholder="Breite" />
                 <TextInput v-model="batteryData.height" label="Höhe [mm]" placeholder="Höhe" />
+                <input @input="handleFileInput" type="file" accept="image/png image/jpeg" class="file-input max-w-xs" />
                 <ButtonAdd type="submit" @submit="addBattery()" label="Batterie Erstellen"
                     tooltip="Neuer Batterietyp erstellen" />
             </form>
