@@ -33,10 +33,11 @@ definePageMeta({
         <Card title="Login">
             <InputError :condition="loginInvalid" :text="loginInvalid" />
             <form @submit.prevent="logInWithUsername" class="w-full">
-                <TextInput type="email" label="Email" placeholder="Email eingeben" v-model="email" required />
-                <TextInput type="password" label="Passwort" placeholder="Passwort eingeben" v-model="password"
+                <TextInput id="email" type="email" label="Email" placeholder="Email eingeben" v-model="email"
                     required />
-                <button class="btn btn-primary w-full" @submit="logInWithUsername()">Login</button>
+                <TextInput id="password" type="password" label="Passwort" placeholder="Passwort eingeben"
+                    v-model="password" required />
+                <button id="login" class="btn btn-primary w-full" @submit="logInWithUsername()">Login</button>
             </form>
         </Card>
     </div>
