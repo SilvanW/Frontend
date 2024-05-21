@@ -31,7 +31,8 @@ async function logout() {
 			<SidenavButton v-model="showNav" icon="fa6-solid:user" label="Meine Seite" target-page="/" />
 			<SidenavButton v-model="showNav" icon="fa6-solid:battery-full" label="Batterietypen"
 				target-page="/batteryTypes" />
-			<div v-on:click="logout()" class="flex flex-row justify-left items-center p-2 cursor-pointer">
+			<div v-on:click="logout()"
+				class="flex flex-row justify-left items-center p-2 cursor-pointer hover:bg-blue-500 rounded-lg">
 				<Icon name="fa6-solid:arrow-right-from-bracket" color="red" />
 				<h3 class="logout-text font-medium text-xl mx-2 my-0">Logout</h3>
 			</div>
