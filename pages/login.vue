@@ -30,7 +30,7 @@ definePageMeta({
 
 <template>
     <div class="main-background flex-1 flex flex-col justify-center items-center flex-nowrap">
-        <Card title="Login">
+        <Card title="Login" skeleton="true">
             <InputError :condition="loginInvalid" :text="loginInvalid" />
             <form @submit.prevent="logInWithUsername" class="w-full">
                 <TextInput id="email" type="email" label="Email" placeholder="Email eingeben" v-model="email"

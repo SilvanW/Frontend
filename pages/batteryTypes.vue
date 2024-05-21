@@ -213,7 +213,7 @@ onMounted(() => {
         <Transition>
             <Notification v-if="showBatteryUpdated" text="Batterie Geändert" />
         </Transition>
-        <Card title="Batterieliste">
+        <Card title="Batterieliste" skeleton="true">
             <div class="list-container overflow-auto">
                 <ListItem v-for="item in items" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
@@ -222,7 +222,7 @@ onMounted(() => {
             <ButtonAdd v-on:click="showNewBatteryCard()" label="Neue Freigabe" tooltip="Neuer Batterietyp freigeben">
             </ButtonAdd>
         </Card>
-        <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" closable="true">
+        <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" skeleton="true" closable="true">
             <form @submit.prevent="addBattery">
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" required />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />
@@ -238,7 +238,8 @@ onMounted(() => {
                     tooltip="Neuer Batterietyp erstellen" />
             </form>
         </Card>
-        <Card v-model="showBatteryProperties" v-if="showBatteryProperties" title="Eigenschaften" closable="true">
+        <Card v-model="showBatteryProperties" v-if="showBatteryProperties" title="Eigenschaften" skeleton="true"
+            closable="true">
             <form>
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />

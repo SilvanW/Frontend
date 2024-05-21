@@ -1,5 +1,5 @@
 <script setup>
-defineProps(["title", "closable"])
+defineProps(["title", "skeleton", "closable"])
 
 const model = defineModel()
 </script>
@@ -11,7 +11,8 @@ const model = defineModel()
             <Icon v-show="closable" v-on:click="model = false" class="card-icon cursor-pointer" name="fa6-solid:xmark"
                 size="1.5em" />
         </div>
-        <slot />
+        <slot v-if="skeleton" />
+        <div v-else class="skeleton h-16 w-full"></div>
     </div>
 </template>
 
