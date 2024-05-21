@@ -215,7 +215,6 @@ async function storeImage() {
     })
 
     if (error) {
-        console.log("Store Image error")
         console.log(error)
     }
 }
