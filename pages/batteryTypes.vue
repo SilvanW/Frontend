@@ -1,6 +1,6 @@
 <script setup>
 
-import { decode } from 'base64-arraybuffer'
+import { encode, decode } from 'base64-arraybuffer'
 
 definePageMeta({
     middleware: ["auth"]
@@ -219,6 +219,18 @@ async function storeImage() {
     }
 }
 
+async function getImage() {
+    const { data, error } = await supabase.storage.from("battery_types").download('private/test.png')
+
+    if (error) {
+        console.log(error)
+    }
+
+    console.log(data)
+
+    return data
+}
+
 onMounted(() => {
     get_batteries()
 })
@@ -237,6 +249,7 @@ onMounted(() => {
             <Notification v-if="showBatteryUpdated" text="Batterie Geändert" />
         </Transition>
         <Card title="Batterieliste" skeleton="true">
+            <img :src="getImage()" alt="Bild konnte nicht geladen werden" />
             <div class="list-container overflow-auto">
                 <ListItem v-for="item in items" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
