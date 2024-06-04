@@ -27,30 +27,13 @@ const showBatteryUpdated = ref(false)
 
 const inputValid = ref(false)
 
-const items = ref([])
+const batteryDataStore = useBatteryTypes()
+
+await callOnce(batteryDataStore.fetchBatteryData)
+
+console.log(batteryDataStore.batteries)
 
 const battery_image = defineModel()
-
-async function get_batteries() {
-    // Read Items from Database
-    const { data: battery_data, error: battery_error } = await supabase.from("batteries").select(`
-    id,
-    type,
-    battery_manufacturers (id, name),
-    battery_chemistries (id, name),
-    nominalCapacity,
-    nominalWeight,
-    length,
-    width,
-    height
-`)
-
-    if (battery_error) {
-        console.log(battery_error)
-    } else {
-        items.value = battery_data
-    }
-}
 
 const manufacturerOptions = []
 
@@ -126,7 +109,7 @@ async function addBattery() {
 
     showNewBattery.value = false
 
-    get_batteries()
+    batteryDataStore.fetchBatteryData()
 }
 
 function showBatteryContent(item) {
@@ -148,42 +131,19 @@ function showBatteryContent(item) {
 }
 
 async function updateBattery() {
-    const { error } = await supabase.from("batteries").update(
-        {
-            "type": batteryData.value.type,
-            "manufacturer": batteryData.value.manufacturer,
-            "chemistry": batteryData.value.cellChemistry,
-            "nominalCapacity": batteryData.value.nominalCapacity,
-            "nominalWeight": batteryData.value.nominalWeight,
-            "length": batteryData.value.length,
-            "width": batteryData.value.width,
-            "height": batteryData.value.height
-        }
-    ).eq('id', batteryData.value.id)
-
-    if (error) {
-        console.log(error)
-    }
+    batteryDataStore.updateBatteryData(batteryData.value)
 
     showNotification(showBatteryUpdated)
 
     showBatteryProperties.value = false
-
-    get_batteries()
 }
 
 async function deleteBattery() {
-    const { error } = await supabase.from("batteries").delete().eq('id', batteryData.value.id)
-
-    if (error) {
-        console.log(error)
-    }
+    batteryDataStore.deleteBatteryData(batteryData.value.id)
 
     showNotification(showBatteryDeleted)
 
     showBatteryProperties.value = false
-
-    get_batteries()
 }
 
 function showNewBatteryCard() {
@@ -231,10 +191,6 @@ async function getImage() {
     return data
 }
 
-onMounted(() => {
-    get_batteries()
-})
-
 </script>
 
 <template>
@@ -251,7 +207,7 @@ onMounted(() => {
         <Card title="Batterieliste" skeleton="true">
             <img :src="getImage()" alt="Bild konnte nicht geladen werden" />
             <div class="list-container overflow-auto">
-                <ListItem v-for="item in items" :title="item.type"
+                <ListItem v-for="item in batteryDataStore.batteries" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
                     v-on:click="showBatteryContent(item)" />
             </div>
