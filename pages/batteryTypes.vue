@@ -29,10 +29,8 @@ const showBatteryUpdated = ref(false)
 const batteryTypesStore = useBatteryTypes()
 const batteryManufacturersStore = useBatteryManufacturers()
 
-await callOnce(batteryTypesStore.fetchBatteryData)
-
-const battery_image = defineModel()
-
+// Yeet
+const batteryData = ref()
 const chemistryOptions = []
 
 // Read Battery Chemistires
@@ -50,11 +48,13 @@ if (battery_chemistries_error) {
     }
 }
 
-const batteryData = ref(
-    {
+await callOnce(async () => {
+    await batteryTypesStore.fetchBatteryData()
+    await batteryManufacturersStore.fetchBatteryManufacturers()
+    batteryData.value = {
         "id": 0,
         "type": "",
-        "manufacturer": manufacturerOptions[0].value,
+        "manufacturer": batteryManufacturersStore.batteryManufacturers[0].id,
         "cellChemistry": chemistryOptions[0].value,
         "nominalCapacity": 0,
         "nominalWeight": 0,
@@ -62,7 +62,12 @@ const batteryData = ref(
         "width": 0,
         "height": 0
     }
+}
 )
+
+const battery_image = defineModel()
+
+
 
 async function addBattery() {
     batteryTypesStore.insertBatteryData(batteryData.value)
@@ -75,9 +80,6 @@ async function addBattery() {
 }
 
 function showBatteryContent(item) {
-    // Load available Manufacturers for Dropdown
-    batteryManufacturersStore.fetchBatteryManufacturers()
-
     showBatteryProperties.value = true
     showNewBattery.value = false
 
