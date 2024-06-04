@@ -30,28 +30,50 @@ const batteryTypesStore = useBatteryTypes()
 const batteryManufacturersStore = useBatteryManufacturers()
 const batteryChemistriesStore = useBatteryChemistries()
 
-// Yeet
-const batteryData = ref()
+// Define Battery Data Reference
+const batteryData = ref({
+    "id": 0,
+    "type": "",
+    "manufacturer": 1,
+    "cellChemistry": 1,
+    "nominalCapacity": 0,
+    "nominalWeight": 0,
+    "length": 0,
+    "width": 0,
+    "height": 0
+})
 
+const battery_image = defineModel()
+
+const dataUrl = ref('')
+
+async function getImage() {
+    const { data, error } = await supabase.storage.from("battery_types").download('private/test.png')
+
+    if (error) {
+        console.log(error)
+    }
+
+    const reader = new FileReader()
+
+    reader.onload = function (e) {
+        dataUrl.value = e.target.result
+        console.log(dataUrl.value)
+    }
+
+    if (data) {
+        reader.readAsDataURL(data)
+    }
+}
+
+// Load Stores
 await callOnce(async () => {
     await batteryTypesStore.fetchBatteryData()
     await batteryManufacturersStore.fetchBatteryManufacturers()
     await batteryChemistriesStore.fetchBatteryChemistries()
-    batteryData.value = {
-        "id": 0,
-        "type": "",
-        "manufacturer": batteryManufacturersStore.batteryManufacturers[0].id,
-        "cellChemistry": batteryChemistriesStore.batteryChemistries[0].id,
-        "nominalCapacity": 0,
-        "nominalWeight": 0,
-        "length": 0,
-        "width": 0,
-        "height": 0
-    }
+    await getImage()
 }
 )
-
-const battery_image = defineModel()
 
 async function addBattery() {
     batteryTypesStore.insertBatteryData(batteryData.value)
@@ -103,8 +125,8 @@ function showNewBatteryCard() {
     batteryData.value = {
         "id": 0,
         "type": "",
-        "manufacturer": manufacturerOptions[0].value,
-        "cellChemistry": chemistryOptions[0].value,
+        "manufacturer": 1,
+        "cellChemistry": 1,
         "nominalCapacity": 0,
         "nominalWeight": 0,
         "length": 0,
@@ -117,9 +139,9 @@ const { handleFileInput, files } = useFileStorage()
 
 async function storeImage() {
 
-    const base64_string = files.value[0].content.split('base64,')[1]
+    console.log(files.value[0].content)
 
-    console.log(base64_string)
+    const base64_string = files.value[0].content.split('base64,')[1]
 
     const { data, error } = await supabase.storage.from("battery_types").upload("private/test.png", decode(base64_string), {
         contentType: "image/png"
@@ -128,18 +150,7 @@ async function storeImage() {
     if (error) {
         console.log(error)
     }
-}
 
-async function getImage() {
-    const { data, error } = await supabase.storage.from("battery_types").download('private/test.png')
-
-    if (error) {
-        console.log(error)
-    }
-
-    console.log(data)
-
-    return data
 }
 
 </script>
@@ -156,7 +167,7 @@ async function getImage() {
             <Notification v-if="showBatteryUpdated" text="Batterie Geändert" />
         </Transition>
         <Card title="Batterieliste" skeleton="true">
-            <img :src="getImage()" alt="Bild konnte nicht geladen werden" />
+            <img v-on="dataUrl" :src="dataUrl" alt="Bild konnte nicht geladen werden" />
             <div class="list-container overflow-auto">
                 <ListItem v-for="item in batteryTypesStore.batteryTypes" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
