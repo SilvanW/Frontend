@@ -1,5 +1,7 @@
 <script setup>
 
+import { encode, decode } from 'base64-arraybuffer'
+
 definePageMeta({
     middleware: ["auth"]
 })
@@ -23,30 +25,12 @@ const showBatteryAdded = ref(false)
 const showBatteryDeleted = ref(false)
 const showBatteryUpdated = ref(false)
 
-const inputValid = ref(false)
+// Initialize Stores
+const batteryTypesStore = useBatteryTypes()
 
-const items = ref([])
+await callOnce(batteryTypesStore.fetchBatteryData)
 
-async function get_batteries() {
-    // Read Items from Database
-    const { data: battery_data, error: battery_error } = await supabase.from("batteries").select(`
-    id,
-    type,
-    battery_manufacturers (id, name),
-    battery_chemistries (id, name),
-    nominalCapacity,
-    nominalWeight,
-    length,
-    width,
-    height
-`)
-
-    if (battery_error) {
-        console.log(battery_error)
-    } else {
-        items.value = battery_data
-    }
-}
+const battery_image = defineModel()
 
 const manufacturerOptions = []
 
@@ -97,30 +81,13 @@ const batteryData = ref(
 )
 
 async function addBattery() {
-    const { error } = await supabase.from("batteries").insert(
-        {
-            "type": batteryData.value.type,
-            "manufacturer": batteryData.value.manufacturer,
-            "chemistry": batteryData.value.cellChemistry,
-            "nominalCapacity": batteryData.value.nominalCapacity,
-            "nominalWeight": batteryData.value.nominalWeight,
-            "length": batteryData.value.length,
-            "width": batteryData.value.width,
-            "height": batteryData.value.height
-        }
-    )
+    batteryTypesStore.insertBatteryData(batteryData.value)
 
-    if (error) {
-        console.log(error)
-        inputValid.value = true
-        return
-    }
+    storeImage()
 
     showNotification(showBatteryAdded)
 
     showNewBattery.value = false
-
-    get_batteries()
 }
 
 function showBatteryContent(item) {
@@ -142,42 +109,19 @@ function showBatteryContent(item) {
 }
 
 async function updateBattery() {
-    const { error } = await supabase.from("batteries").update(
-        {
-            "type": batteryData.value.type,
-            "manufacturer": batteryData.value.manufacturer,
-            "chemistry": batteryData.value.cellChemistry,
-            "nominalCapacity": batteryData.value.nominalCapacity,
-            "nominalWeight": batteryData.value.nominalWeight,
-            "length": batteryData.value.length,
-            "width": batteryData.value.width,
-            "height": batteryData.value.height
-        }
-    ).eq('id', batteryData.value.id)
-
-    if (error) {
-        console.log(error)
-    }
+    batteryTypesStore.updateBatteryData(batteryData.value)
 
     showNotification(showBatteryUpdated)
 
     showBatteryProperties.value = false
-
-    get_batteries()
 }
 
 async function deleteBattery() {
-    const { error } = await supabase.from("batteries").delete().eq('id', batteryData.value.id)
-
-    if (error) {
-        console.log(error)
-    }
+    batteryTypesStore.deleteBatteryData(batteryData.value.id)
 
     showNotification(showBatteryDeleted)
 
     showBatteryProperties.value = false
-
-    get_batteries()
 }
 
 function showNewBatteryCard() {
@@ -196,9 +140,34 @@ function showNewBatteryCard() {
     }
 }
 
-onMounted(() => {
-    get_batteries()
-})
+const { handleFileInput, files } = useFileStorage()
+
+async function storeImage() {
+
+    const base64_string = files.value[0].content.split('base64,')[1]
+
+    console.log(base64_string)
+
+    const { data, error } = await supabase.storage.from("battery_types").upload("private/test.png", decode(base64_string), {
+        contentType: "image/png"
+    })
+
+    if (error) {
+        console.log(error)
+    }
+}
+
+async function getImage() {
+    const { data, error } = await supabase.storage.from("battery_types").download('private/test.png')
+
+    if (error) {
+        console.log(error)
+    }
+
+    console.log(data)
+
+    return data
+}
 
 </script>
 
@@ -213,16 +182,17 @@ onMounted(() => {
         <Transition>
             <Notification v-if="showBatteryUpdated" text="Batterie Geändert" />
         </Transition>
-        <Card title="Batterieliste">
+        <Card title="Batterieliste" skeleton="true">
+            <img :src="getImage()" alt="Bild konnte nicht geladen werden" />
             <div class="list-container overflow-auto">
-                <ListItem v-for="item in items" :title="item.type"
+                <ListItem v-for="item in batteryTypesStore.batteryTypes" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
                     v-on:click="showBatteryContent(item)" />
             </div>
             <ButtonAdd v-on:click="showNewBatteryCard()" label="Neue Freigabe" tooltip="Neuer Batterietyp freigeben">
             </ButtonAdd>
         </Card>
-        <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" closable="true">
+        <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" skeleton="true" closable="true">
             <form @submit.prevent="addBattery">
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" required />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />
@@ -234,11 +204,13 @@ onMounted(() => {
                 <TextInput v-model="batteryData.length" label="Länge [mm]" placeholder="Länge" />
                 <TextInput v-model="batteryData.width" label="Breite [mm]" placeholder="Breite" />
                 <TextInput v-model="batteryData.height" label="Höhe [mm]" placeholder="Höhe" />
+                <input @input="handleFileInput" type="file" accept="image/png image/jpeg" class="file-input max-w-xs" />
                 <ButtonAdd type="submit" @submit="addBattery()" label="Batterie Erstellen"
                     tooltip="Neuer Batterietyp erstellen" />
             </form>
         </Card>
-        <Card v-model="showBatteryProperties" v-if="showBatteryProperties" title="Eigenschaften" closable="true">
+        <Card v-model="showBatteryProperties" v-if="showBatteryProperties" title="Eigenschaften" skeleton="true"
+            closable="true">
             <form>
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />

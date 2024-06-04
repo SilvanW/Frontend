@@ -80,3 +80,18 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 + SUPABASE_URL
 + SUPABASE_KEY
+
+# Cypress
+
+```zsh
+pnpm cypress run
+```
+
+# Pinia
+
++ File Name: batteryTypes
++ Store Name: batteryTypes
++ export const: useBatteryTypes
++ store data: batteryTypes
++ functions: `action`BatteryTypes
++ usage: batteryTypesStore

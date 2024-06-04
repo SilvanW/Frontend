@@ -30,14 +30,14 @@ definePageMeta({
 
 <template>
     <div class="main-background flex-1 flex flex-col justify-center items-center flex-nowrap">
-        <Card title="Login">
+        <Card title="Login" skeleton="true">
             <InputError :condition="loginInvalid" :text="loginInvalid" />
             <form @submit.prevent="logInWithUsername" class="w-full">
-                <TextInput type="email" label="Email" placeholder="Email eingeben" v-model="email" required />
-                <TextInput type="password" label="Passwort" placeholder="Passwort eingeben" v-model="password"
+                <TextInput id="email" type="email" label="Email" placeholder="Email eingeben" v-model="email"
                     required />
-                <b-button type="submit" class="w-full p-2" button="primary"
-                    @submit="logInWithUsername()">Login</b-button>
+                <TextInput id="password" type="password" label="Passwort" placeholder="Passwort eingeben"
+                    v-model="password" required />
+                <button id="login" class="btn btn-primary w-full" @submit="logInWithUsername()">Login</button>
             </form>
         </Card>
     </div>
