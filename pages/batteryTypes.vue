@@ -28,34 +28,20 @@ const showBatteryUpdated = ref(false)
 // Initialize Stores
 const batteryTypesStore = useBatteryTypes()
 const batteryManufacturersStore = useBatteryManufacturers()
+const batteryChemistriesStore = useBatteryChemistries()
 
 // Yeet
 const batteryData = ref()
-const chemistryOptions = []
-
-// Read Battery Chemistires
-const { data: battery_chemistries_data, error: battery_chemistries_error } = await supabase.from("battery_chemistries").select()
-
-if (battery_chemistries_error) {
-    console.log(battery_chemistries_error)
-} else {
-    for (let index in battery_chemistries_data) {
-        let battery_chemistry = battery_chemistries_data[index]
-        chemistryOptions.push({
-            "value": battery_chemistry.id,
-            "text": battery_chemistry.name
-        })
-    }
-}
 
 await callOnce(async () => {
     await batteryTypesStore.fetchBatteryData()
     await batteryManufacturersStore.fetchBatteryManufacturers()
+    await batteryChemistriesStore.fetchBatteryChemistries()
     batteryData.value = {
         "id": 0,
         "type": "",
         "manufacturer": batteryManufacturersStore.batteryManufacturers[0].id,
-        "cellChemistry": chemistryOptions[0].value,
+        "cellChemistry": batteryChemistriesStore.batteryChemistries[0].id,
         "nominalCapacity": 0,
         "nominalWeight": 0,
         "length": 0,
@@ -66,8 +52,6 @@ await callOnce(async () => {
 )
 
 const battery_image = defineModel()
-
-
 
 async function addBattery() {
     batteryTypesStore.insertBatteryData(batteryData.value)
@@ -186,7 +170,8 @@ async function getImage() {
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" required />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer"
                     :options="batteryManufacturersStore.batteryManufacturers" />
-                <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie" :options="chemistryOptions" />
+                <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie"
+                    :options="batteryChemistriesStore.batteryChemistries" />
                 <TextInput v-model="batteryData.nominalCapacity" label="Nominalkapazität [Ah]"
                     placeholder="Nominalkapazität" />
                 <TextInput v-model="batteryData.nominalWeight" label="Nominalgewicht [g]"
@@ -205,7 +190,8 @@ async function getImage() {
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer"
                     :options="batteryManufacturersStore.batteryManufacturers" />
-                <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie" :options="chemistryOptions" />
+                <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie"
+                    :options="batteryChemistriesStore.batteryChemistries" />
                 <TextInput v-model="batteryData.nominalCapacity" label="Nominalkapazität [Ah]"
                     placeholder="Nominalkapazität" />
                 <TextInput v-model="batteryData.nominalWeight" label="Nominalgewicht [g]"
