@@ -1,9 +1,9 @@
 export const useBatteryTypes = defineStore('batteryTypes', () => {
     const supabase = useSupabaseClient()
-    const batteries = ref()
+    const batteryTypes = ref()
 
     // Read Data from Supabase
-    async function fetchBatteryData() {
+    async function fetchBatteryTypes() {
         const { data: battery_data, error: battery_error } = await supabase.from("batteries").select(`
             id,
             type,
@@ -19,12 +19,12 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
         if (battery_error) {
             console.log(battery_error)
         } else {
-            batteries.value = battery_data
+            batteryTypes.value = battery_data
         }
     }
 
     // Add Data to Supabase
-    async function insertBatteryData(batteryInfo) {
+    async function insertBatteryTypes(batteryInfo) {
         const { error } = await supabase.from("batteries").insert(
             {
                 "type": batteryInfo.type,
@@ -42,11 +42,11 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
             console.log(error)
         }
 
-        fetchBatteryData()
+        fetchBatteryTypes()
     }
 
     // Update Data from Supabase
-    async function updateBatteryData(batteryInfo) {
+    async function updateBatteryTypes(batteryInfo) {
         const { error } = await supabase.from("batteries").update(
             {
                 "type": batteryInfo.type,
@@ -64,20 +64,20 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
             console.log(error)
         }
 
-        fetchBatteryData()
+        fetchBatteryTypes()
 
     }
 
     // Delete Data from Supabase
-    async function deleteBatteryData(batteryId) {
+    async function deleteBatteryTypes(batteryId) {
         const { error } = await supabase.from("batteries").delete().eq('id', batteryId)
 
         if (error) {
             console.log(error)
         }
 
-        fetchBatteryData()
+        fetchBatteryTypes()
     }
 
-    return { batteries, fetchBatteryData, insertBatteryData, updateBatteryData, deleteBatteryData }
+    return { batteryTypes, fetchBatteryData: fetchBatteryTypes, insertBatteryData: insertBatteryTypes, updateBatteryData: updateBatteryTypes, deleteBatteryData: deleteBatteryTypes }
 })

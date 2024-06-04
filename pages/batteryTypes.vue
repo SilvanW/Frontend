@@ -25,11 +25,10 @@ const showBatteryAdded = ref(false)
 const showBatteryDeleted = ref(false)
 const showBatteryUpdated = ref(false)
 
-const batteryDataStore = useBatteryTypes()
+// Initialize Stores
+const batteryTypesStore = useBatteryTypes()
 
-await callOnce(batteryDataStore.fetchBatteryData)
-
-console.log(batteryDataStore.batteries)
+await callOnce(batteryTypesStore.fetchBatteryData)
 
 const battery_image = defineModel()
 
@@ -82,7 +81,7 @@ const batteryData = ref(
 )
 
 async function addBattery() {
-    batteryDataStore.insertBatteryData(batteryData.value)
+    batteryTypesStore.insertBatteryData(batteryData.value)
 
     storeImage()
 
@@ -110,7 +109,7 @@ function showBatteryContent(item) {
 }
 
 async function updateBattery() {
-    batteryDataStore.updateBatteryData(batteryData.value)
+    batteryTypesStore.updateBatteryData(batteryData.value)
 
     showNotification(showBatteryUpdated)
 
@@ -118,7 +117,7 @@ async function updateBattery() {
 }
 
 async function deleteBattery() {
-    batteryDataStore.deleteBatteryData(batteryData.value.id)
+    batteryTypesStore.deleteBatteryData(batteryData.value.id)
 
     showNotification(showBatteryDeleted)
 
@@ -186,7 +185,7 @@ async function getImage() {
         <Card title="Batterieliste" skeleton="true">
             <img :src="getImage()" alt="Bild konnte nicht geladen werden" />
             <div class="list-container overflow-auto">
-                <ListItem v-for="item in batteryDataStore.batteries" :title="item.type"
+                <ListItem v-for="item in batteryTypesStore.batteryTypes" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
                     v-on:click="showBatteryContent(item)" />
             </div>

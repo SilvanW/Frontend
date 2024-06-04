@@ -86,3 +86,12 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 ```zsh
 pnpm cypress run
 ```
+
+# Pinia
+
++ File Name: batteryTypes
++ Store Name: batteryTypes
++ export const: useBatteryTypes
++ store data: batteryTypes
++ functions: `action`BatteryTypes
++ usage: batteryTypesStore
