@@ -27,27 +27,11 @@ const showBatteryUpdated = ref(false)
 
 // Initialize Stores
 const batteryTypesStore = useBatteryTypes()
+const batteryManufacturersStore = useBatteryManufacturers()
 
 await callOnce(batteryTypesStore.fetchBatteryData)
 
 const battery_image = defineModel()
-
-const manufacturerOptions = []
-
-// Read Battery Manufacturers
-const { data: battery_manufacturer_data, error: battery_manufacturer_error } = await supabase.from("battery_manufacturers").select()
-
-if (battery_manufacturer_error) {
-    console.log(battery_manufacturer_error)
-} else {
-    for (let index in battery_manufacturer_data) {
-        let battery_manufacturer = battery_manufacturer_data[index]
-        manufacturerOptions.push({
-            "value": battery_manufacturer.id,
-            "text": battery_manufacturer.name
-        })
-    }
-}
 
 const chemistryOptions = []
 
@@ -91,6 +75,9 @@ async function addBattery() {
 }
 
 function showBatteryContent(item) {
+    // Load available Manufacturers for Dropdown
+    batteryManufacturersStore.fetchBatteryManufacturers()
+
     showBatteryProperties.value = true
     showNewBattery.value = false
 
@@ -195,7 +182,8 @@ async function getImage() {
         <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" skeleton="true" closable="true">
             <form @submit.prevent="addBattery">
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" required />
-                <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />
+                <Dropdown v-model="batteryData.manufacturer" label="Manufacturer"
+                    :options="batteryManufacturersStore.batteryManufacturers" />
                 <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie" :options="chemistryOptions" />
                 <TextInput v-model="batteryData.nominalCapacity" label="Nominalkapazität [Ah]"
                     placeholder="Nominalkapazität" />
@@ -213,7 +201,8 @@ async function getImage() {
             closable="true">
             <form>
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" />
-                <Dropdown v-model="batteryData.manufacturer" label="Manufacturer" :options="manufacturerOptions" />
+                <Dropdown v-model="batteryData.manufacturer" label="Manufacturer"
+                    :options="batteryManufacturersStore.batteryManufacturers" />
                 <Dropdown v-model="batteryData.cellChemistry" label="Zellchemie" :options="chemistryOptions" />
                 <TextInput v-model="batteryData.nominalCapacity" label="Nominalkapazität [Ah]"
                     placeholder="Nominalkapazität" />
