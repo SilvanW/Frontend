@@ -84,32 +84,13 @@ const batteryData = ref(
 )
 
 async function addBattery() {
-    const { error } = await supabase.from("batteries").insert(
-        {
-            "type": batteryData.value.type,
-            "manufacturer": batteryData.value.manufacturer,
-            "chemistry": batteryData.value.cellChemistry,
-            "nominalCapacity": batteryData.value.nominalCapacity,
-            "nominalWeight": batteryData.value.nominalWeight,
-            "length": batteryData.value.length,
-            "width": batteryData.value.width,
-            "height": batteryData.value.height
-        }
-    )
-
-    if (error) {
-        console.log(error)
-        inputValid.value = true
-        return
-    }
+    batteryDataStore.insertBatteryData(batteryData.value)
 
     storeImage()
 
     showNotification(showBatteryAdded)
 
     showNewBattery.value = false
-
-    batteryDataStore.fetchBatteryData()
 }
 
 function showBatteryContent(item) {

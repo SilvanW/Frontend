@@ -23,6 +23,28 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
         }
     }
 
+    // Add Data to Supabase
+    async function insertBatteryData(batteryInfo) {
+        const { error } = await supabase.from("batteries").insert(
+            {
+                "type": batteryInfo.type,
+                "manufacturer": batteryInfo.manufacturer,
+                "chemistry": batteryInfo.cellChemistry,
+                "nominalCapacity": batteryInfo.nominalCapacity,
+                "nominalWeight": batteryInfo.nominalWeight,
+                "length": batteryInfo.length,
+                "width": batteryInfo.width,
+                "height": batteryInfo.height
+            }
+        )
+
+        if (error) {
+            console.log(error)
+        }
+
+        fetchBatteryData()
+    }
+
     // Update Data from Supabase
     async function updateBatteryData(batteryInfo) {
         const { error } = await supabase.from("batteries").update(
@@ -57,5 +79,5 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
         fetchBatteryData()
     }
 
-    return { batteries, fetchBatteryData, updateBatteryData, deleteBatteryData }
+    return { batteries, fetchBatteryData, insertBatteryData, updateBatteryData, deleteBatteryData }
 })
