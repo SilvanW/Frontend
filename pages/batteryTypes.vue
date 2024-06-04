@@ -25,8 +25,6 @@ const showBatteryAdded = ref(false)
 const showBatteryDeleted = ref(false)
 const showBatteryUpdated = ref(false)
 
-const inputValid = ref(false)
-
 const batteryDataStore = useBatteryTypes()
 
 await callOnce(batteryDataStore.fetchBatteryData)
