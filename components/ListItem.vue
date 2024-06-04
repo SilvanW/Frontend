@@ -1,15 +1,18 @@
 <script setup>
-defineProps(["title", "subtitle"])
+defineProps(["title", "subtitle", "image"])
 </script>
 
 <template>
-    <div class="list p-2 my-2 rounded-lg text-left cursor-pointer">
-        <h5 class="font-bold">
-            {{ title }}
-        </h5>
-        <h6>
-            {{ subtitle }}
-        </h6>
+    <div class="list p-2 my-2 rounded-lg text-left cursor-pointer flex flex-row gap-2">
+        <img :src="image" class="aspect-square object-cover" height="50px" width="50px" />
+        <div>
+            <h5 class="font-bold">
+                {{ title }}
+            </h5>
+            <h6>
+                {{ subtitle }}
+            </h6>
+        </div>
     </div>
 </template>
 

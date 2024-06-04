@@ -167,11 +167,10 @@ async function storeImage() {
             <Notification v-if="showBatteryUpdated" text="Batterie Geändert" />
         </Transition>
         <Card title="Batterieliste" skeleton="true">
-            <img v-on="dataUrl" :src="dataUrl" alt="Bild konnte nicht geladen werden" />
             <div class="list-container overflow-auto">
                 <ListItem v-for="item in batteryTypesStore.batteryTypes" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
-                    v-on:click="showBatteryContent(item)" />
+                    v-on:click="showBatteryContent(item)" :image="dataUrl" />
             </div>
             <ButtonAdd v-on:click="showNewBatteryCard()" label="Neue Freigabe" tooltip="Neuer Batterietyp freigeben">
             </ButtonAdd>
