@@ -12,13 +12,14 @@ async function changeSettings() {
     setLocale(selectedLanguage.value)
 }
 
+const availableLanguages = [{ 'name': 'Deutsch', 'id': 'de' }, { 'name': 'Englisch', 'id': 'en' }]
+
 </script>
 
 <template>
     <Main>
         <Card title="Einstellungen" :skeleton="true">
-            <Dropdown v-model="selectedLanguage" :label="$t('language')"
-                :options="[{ 'name': 'Deutsch', 'id': 'de' }, { 'name': 'Englisch', 'id': 'en' }]" />
+            <Dropdown v-model="selectedLanguage" :label="$t('language')" :options="availableLanguages" />
             <ButtonChange @click="changeSettings()" :label="$t('changeSettings')" />
         </Card>
     </Main>
