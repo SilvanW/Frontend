@@ -4,7 +4,7 @@ definePageMeta({
     middleware: ["auth"]
 })
 
-const { locale, setLocale } = useI18n()
+const { setLocale } = useI18n()
 
 const selectedLanguage = ref('de')
 

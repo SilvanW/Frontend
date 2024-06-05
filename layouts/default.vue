@@ -2,6 +2,8 @@
 
 const supabase = useSupabaseClient()
 
+useI18n()
+
 const showNav = ref(false)
 
 function toggleNav() {
@@ -27,10 +29,10 @@ async function logout() {
 			<img src="/Logo-Kyburz.svg" alt="Kyburz Logo" id="logo" />
 		</header>
 		<div v-show="showNav" class="sidenav fixed z-10 overflow-x-hidden duration-500 top-20 p-2">
-			<SidenavButton v-model="showNav" icon="fa6-solid:user" label="Meine Seite" target-page="/" />
-			<SidenavButton v-model="showNav" icon="fa6-solid:battery-full" label="Batterietypen"
+			<SidenavButton v-model="showNav" icon="fa6-solid:user" :label="$t('myPage')" target-page="/" />
+			<SidenavButton v-model="showNav" icon="fa6-solid:battery-full" :label="$t('batteryTypes')"
 				target-page="/batteryTypes" />
-			<SidenavButton v-model="showNav" icon="fa6-solid:gear" label="Einstellungen" target-page="/settings" />
+			<SidenavButton v-model="showNav" icon="fa6-solid:gear" :label="$t('settings')" target-page="/settings" />
 			<div v-on:click="logout()"
 				class="flex flex-row justify-left items-center p-2 cursor-pointer hover:bg-blue-500 rounded-lg">
 				<Icon name="fa6-solid:arrow-right-from-bracket" color="red" />
