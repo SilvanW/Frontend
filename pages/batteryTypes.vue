@@ -31,6 +31,7 @@ const showBatteryUpdated = ref(false)
 const batteryTypesStore = useBatteryTypes()
 const batteryManufacturersStore = useBatteryManufacturers()
 const batteryChemistriesStore = useBatteryChemistries()
+const batteryTypeImagesStore = useBatteryTypeImages()
 
 // Define Battery Data Reference
 const batteryData = ref({
@@ -59,7 +60,6 @@ async function getImage() {
 
     reader.onload = function (e) {
         dataUrl.value = e.target.result
-        console.log(dataUrl.value)
     }
 
     if (data) {
@@ -71,6 +71,7 @@ onMounted(async () => {
     await batteryTypesStore.fetchBatteryData()
     await batteryManufacturersStore.fetchBatteryManufacturers()
     await batteryChemistriesStore.fetchBatteryChemistries()
+    await batteryTypeImagesStore.fetchBatteryTypeImages()
     await getImage()
 });
 
@@ -170,7 +171,8 @@ async function storeImage(batteryId) {
             <div class="list-container overflow-auto">
                 <ListItem v-for="item in batteryTypesStore.batteryTypes" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
-                    v-on:click="showBatteryContent(item)" :image="dataUrl" />
+                    v-on:click="showBatteryContent(item)"
+                    :image="batteryTypeImagesStore.batteryTypeImageReferences[item.storageUUID]" />
             </div>
             <ButtonAdd v-on:click="showNewBatteryCard()" label="Neue Freigabe" tooltip="Neuer Batterietyp freigeben">
             </ButtonAdd>
