@@ -1,6 +1,6 @@
 export default defineI18nConfig(() => ({
     legacy: false,
-    locale: 'de',
+    locale: 'en',
     messages: {
         de: {
             user: 'Benutzer',
@@ -10,7 +10,21 @@ export default defineI18nConfig(() => ({
             batteryTypes: 'Batterietypen',
             settings: 'Einstellungen',
             welcome: 'Willkommen',
-            function: 'Funktion'
+            function: 'Funktion',
+            batteryList: 'Batterieliste',
+            properties: 'Eigenschaften',
+            manufacturer: 'Hersteller',
+            cellChemistry: 'Zellchemie',
+            type: 'Typ',
+            nominalCapacity: 'Nominalkapazität [Ah]',
+            nominalWeight: 'Nominalgewicht [g]',
+            length: 'Länge [mm]',
+            width: 'Breite [mm]',
+            height: 'Höhe [mm]',
+            changeBattery: 'Batterie ändern',
+            deleteBattery: 'Batterie löschen',
+            newBattery: 'Batterie hinzufügen',
+            createBattery: 'Batterie erstellen'
         },
         en: {
             user: 'User',
@@ -20,7 +34,21 @@ export default defineI18nConfig(() => ({
             batteryTypes: 'Battery types',
             settings: 'Settings',
             welcome: 'Welcome',
-            function: 'Function'
+            function: 'Function',
+            batteryList: 'List of batteries',
+            properties: 'Properties',
+            manufacturer: 'Manufacturer',
+            cellChemistry: 'Cell Chemistry',
+            type: 'Type',
+            nominalCapacity: 'Nominal capacity [Ah]',
+            nominalWeight: 'Nominal weight [g]',
+            length: 'Length [mm]',
+            width: 'Width [mm]',
+            height: 'Height [mm]',
+            changeBattery: 'Change Battery',
+            deleteBattery: 'Delete Battery',
+            newBattery: 'Add Battery',
+            createBattery: 'Create Battery'
         }
     }
 }))
