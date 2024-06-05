@@ -20,6 +20,7 @@ const model = defineModel()
 .card {
     background-color: rgb(225, 225, 225);
     min-width: 300px;
+    max-width: 400px;
 }
 
 .title {
