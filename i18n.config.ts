@@ -3,10 +3,14 @@ export default defineI18nConfig(() => ({
     locale: 'de',
     messages: {
         de: {
-            user: 'Benutzer'
+            user: 'Benutzer',
+            language: 'Sprache',
+            changeSettings: 'Änderungen übernehmen'
         },
         en: {
-            user: 'User'
+            user: 'User',
+            language: 'Language',
+            changeSettings: 'Apply changes'
         }
     }
 }))
