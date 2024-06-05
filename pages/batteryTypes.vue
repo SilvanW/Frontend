@@ -2,6 +2,8 @@
 
 import { encode, decode } from 'base64-arraybuffer'
 
+import { v4 as uuidv4 } from 'uuid';
+
 definePageMeta({
     middleware: ["auth"]
 })
@@ -40,7 +42,8 @@ const batteryData = ref({
     "nominalWeight": 0,
     "length": 0,
     "width": 0,
-    "height": 0
+    "height": 0,
+    "storageUUID": ''
 })
 
 const battery_image = defineModel()
@@ -76,9 +79,10 @@ await callOnce(async () => {
 )
 
 async function addBattery() {
+    batteryData.value.storageUUID = uuidv4()
     batteryTypesStore.insertBatteryData(batteryData.value)
-
-    storeImage()
+    console.log(batteryData.value.storageUUID)
+    storeImage(batteryData.value.storageUUID)
 
     showNotification(showBatteryAdded)
 
@@ -137,13 +141,13 @@ function showNewBatteryCard() {
 
 const { handleFileInput, files } = useFileStorage()
 
-async function storeImage() {
+async function storeImage(batteryId) {
 
     console.log(files.value[0].content)
 
     const base64_string = files.value[0].content.split('base64,')[1]
 
-    const { data, error } = await supabase.storage.from("battery_types").upload("private/test.png", decode(base64_string), {
+    const { data, error } = await supabase.storage.from("battery_types").upload(`private/${batteryId}.png`, decode(base64_string), {
         contentType: "image/png"
     })
 
@@ -170,7 +174,7 @@ async function storeImage() {
             <div class="list-container overflow-auto">
                 <ListItem v-for="item in batteryTypesStore.batteryTypes" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
-                    v-on:click="showBatteryContent(item)" :image="dataUrl" />
+                    v-on:click="showBatteryContent(item)" :image="item.storageUUID" />
             </div>
             <ButtonAdd v-on:click="showNewBatteryCard()" label="Neue Freigabe" tooltip="Neuer Batterietyp freigeben">
             </ButtonAdd>

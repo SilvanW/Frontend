@@ -13,7 +13,8 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
             nominalWeight,
             length,
             width,
-            height
+            height,
+            storageUUID
         `)
 
         if (battery_error) {
@@ -34,7 +35,8 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
                 "nominalWeight": batteryInfo.nominalWeight,
                 "length": batteryInfo.length,
                 "width": batteryInfo.width,
-                "height": batteryInfo.height
+                "height": batteryInfo.height,
+                "storageUUID": batteryInfo.storageUUID
             }
         )
 
