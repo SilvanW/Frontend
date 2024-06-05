@@ -1,6 +1,6 @@
 <script setup>
 
-import { encode, decode } from 'base64-arraybuffer'
+import { decode } from 'base64-arraybuffer'
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -46,12 +46,10 @@ const batteryData = ref({
     "storageUUID": ''
 })
 
-const battery_image = defineModel()
-
 const dataUrl = ref('')
 
 async function getImage() {
-    const { data, error } = await supabase.storage.from("battery_types").download('private/test.png')
+    const { data, error } = await supabase.storage.from("battery_types").download('private/dd468e46-3458-479f-9aca-1e06a21f1cdf.png')
 
     if (error) {
         console.log(error)
@@ -174,7 +172,7 @@ async function storeImage(batteryId) {
             <div class="list-container overflow-auto">
                 <ListItem v-for="item in batteryTypesStore.batteryTypes" :title="item.type"
                     :subtitle="`Hersteller: ${item.battery_manufacturers.name}`" :key="item.id"
-                    v-on:click="showBatteryContent(item)" :image="item.storageUUID" />
+                    v-on:click="showBatteryContent(item)" :image="dataUrl" />
             </div>
             <ButtonAdd v-on:click="showNewBatteryCard()" label="Neue Freigabe" tooltip="Neuer Batterietyp freigeben">
             </ButtonAdd>
