@@ -10,7 +10,8 @@ export const useCurrentUser = defineStore('user', () => {
         id,
         email,
         name,
-        permission
+        permission,
+        defaultLanguage
         `).eq("email", currentUser.data.user.email).limit(1)
 
         if (user_error) {
@@ -20,5 +21,14 @@ export const useCurrentUser = defineStore('user', () => {
         user.value = user_data[0]
     }
 
-    return { user, fetchCurrentUser }
+    // Update Users Default language
+    async function updateDefaultLanguage(newLanguage) {
+        const { error } = await supabase.from('users').update({ "defaultLanguage": newLanguage }).eq('id', user.value.id)
+
+        if (error) {
+            console.log(error)
+        }
+    }
+
+    return { user, fetchCurrentUser, updateDefaultLanguage }
 })
