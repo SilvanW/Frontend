@@ -18,7 +18,7 @@ const availableLanguages = [{ 'name': 'Deutsch', 'id': 'de' }, { 'name': 'Englis
 
 <template>
     <Main>
-        <Card title="Einstellungen" :skeleton="true">
+        <Card :title="$t('settings')" :skeleton="true">
             <Dropdown v-model="selectedLanguage" :label="$t('language')" :options="availableLanguages" />
             <ButtonChange @click="changeSettings()" :label="$t('changeSettings')" />
         </Card>
