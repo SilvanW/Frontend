@@ -8,7 +8,9 @@ export default defineI18nConfig(() => ({
             changeSettings: 'Änderungen übernehmen',
             myPage: 'Meine Seite',
             batteryTypes: 'Batterietypen',
-            settings: 'Einstellungen'
+            settings: 'Einstellungen',
+            welcome: 'Willkommen',
+            function: 'Funktion'
         },
         en: {
             user: 'User',
@@ -16,7 +18,9 @@ export default defineI18nConfig(() => ({
             changeSettings: 'Apply changes',
             myPage: 'My page',
             batteryTypes: 'Battery types',
-            settings: 'Settings'
+            settings: 'Settings',
+            welcome: 'Welcome',
+            function: 'Function'
         }
     }
 }))

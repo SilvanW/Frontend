@@ -4,6 +4,8 @@ definePageMeta({
     middleware: ["auth"]
 })
 
+useI18n()
+
 // Initialize Stores
 const currentUserStore = useCurrentUser()
 
@@ -13,10 +15,10 @@ await callOnce(currentUserStore.fetchCurrentUser)
 
 <template>
     <Main>
-        <Card title="Willkommen" :skeleton="currentUserStore.user">
+        <Card :title="$t('welcome')" :skeleton="currentUserStore.user">
             <div class="p-2">
-                <TextOutput label="Benutzer" :value="currentUserStore.user.name" />
-                <TextOutput label="Funktion" :value="currentUserStore.user.permission" />
+                <TextOutput :label="$t('user')" :value="currentUserStore.user.name" />
+                <TextOutput :label="$t('function')" :value="currentUserStore.user.permission" />
             </div>
         </Card>
     </Main>
