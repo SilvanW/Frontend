@@ -67,14 +67,12 @@ async function getImage() {
     }
 }
 
-// Load Stores
-await callOnce(async () => {
+onMounted(async () => {
     await batteryTypesStore.fetchBatteryData()
     await batteryManufacturersStore.fetchBatteryManufacturers()
     await batteryChemistriesStore.fetchBatteryChemistries()
     await getImage()
-}
-)
+});
 
 async function addBattery() {
     batteryData.value.storageUUID = uuidv4()
