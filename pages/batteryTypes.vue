@@ -99,7 +99,8 @@ function showBatteryContent(item) {
         "nominalWeight": item.nominalWeight,
         "length": item.length,
         "width": item.width,
-        "height": item.height
+        "height": item.height,
+        "storageUUID": item.storageUUID
     }
 
 }
@@ -200,7 +201,8 @@ async function storeImage(batteryId) {
             closable="true">
             <form>
                 <div class="w-full flex justify-center">
-                    <img :src="dataUrl" class="aspect-square object-cover rounded-md" width="100px" />
+                    <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
+                        class="aspect-square object-cover rounded-md" width="100px" />
                 </div>
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer"
