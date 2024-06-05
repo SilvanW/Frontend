@@ -197,6 +197,9 @@ async function storeImage() {
         <Card v-model="showBatteryProperties" v-if="showBatteryProperties" title="Eigenschaften" skeleton="true"
             closable="true">
             <form>
+                <div class="w-full flex justify-center">
+                    <img :src="dataUrl" class="aspect-square object-cover rounded-md" width="100px" />
+                </div>
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer"
                     :options="batteryManufacturersStore.batteryManufacturers" />
