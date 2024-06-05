@@ -163,61 +163,72 @@ async function storeImage(uuid) {
             <Notification v-if="showBatteryUpdated" text="Batterie Geändert" />
         </Transition>
         <Card :title="$t('batteryList')" skeleton="true">
-            <div class="list-container overflow-auto">
-                <ListItem v-for="item in batteryTypesStore.batteryTypes" :title="item.type"
-                    :subtitle="`${$t('manufacturer')}: ${item.battery_manufacturers.name}`" :key="item.id"
-                    v-on:click="showBatteryContent(item)"
-                    :image="batteryTypeImagesStore.batteryTypeImageReferences[item.storageUUID]" />
+            <div class="p-2">
+                <div class="list-container overflow-auto">
+                    <ListItem v-for="item in batteryTypesStore.batteryTypes" :title="item.type"
+                        :subtitle="`${$t('manufacturer')}: ${item.battery_manufacturers.name}`" :key="item.id"
+                        v-on:click="showBatteryContent(item)"
+                        :image="batteryTypeImagesStore.batteryTypeImageReferences[item.storageUUID]" />
+                </div>
+                <ButtonAdd v-on:click="showNewBatteryCard()" :label="$t('newBattery')"
+                    tooltip="Neuer Batterietyp freigeben">
+                </ButtonAdd>
             </div>
-            <ButtonAdd v-on:click="showNewBatteryCard()" :label="$t('newBattery')"
-                tooltip="Neuer Batterietyp freigeben">
-            </ButtonAdd>
+
         </Card>
         <Card v-model="showNewBattery" v-if="showNewBattery" :title="$t('newBattery')" skeleton="true" closable="true">
-            <form @submit.prevent="addBattery">
-                <div v-if="batteryData.storageUUID" class="w-full flex justify-center">
-                    <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
-                        class="aspect-square object-cover rounded-md" width="100px" />
-                </div>
-                <TextInput v-model="batteryData.type" :label="$t('type')" placeholder="Typennummer" required />
-                <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
-                    :options="batteryManufacturersStore.batteryManufacturers" />
-                <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
-                    :options="batteryChemistriesStore.batteryChemistries" />
-                <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
-                    placeholder="Nominalkapazität" />
-                <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
-                    placeholder="Nominalgewicht" />
-                <TextInput v-model="batteryData.length" :label="$t('length')" placeholder="Länge" />
-                <TextInput v-model="batteryData.width" :label="$t('width')" placeholder="Breite" />
-                <TextInput v-model="batteryData.height" :label="$t('height')" placeholder="Höhe" />
-                <input @input="handleFileInput" type="file" accept="image/png image/jpeg" class="file-input max-w-xs" />
-                <ButtonAdd type="submit" @submit="addBattery()" :label="$t('createBattery')"
-                    tooltip="Neuer Batterietyp erstellen" />
-            </form>
+            <div class="p-2">
+                <form @submit.prevent="addBattery">
+                    <div v-if="batteryData.storageUUID" class="w-full flex justify-center">
+                        <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
+                            class="aspect-square object-cover rounded-md" width="100px" />
+                    </div>
+                    <TextInput v-model="batteryData.type" :label="$t('type')" placeholder="Typennummer" required />
+                    <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
+                        :options="batteryManufacturersStore.batteryManufacturers" />
+                    <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
+                        :options="batteryChemistriesStore.batteryChemistries" />
+                    <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
+                        placeholder="Nominalkapazität" />
+                    <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
+                        placeholder="Nominalgewicht" />
+                    <TextInput v-model="batteryData.length" :label="$t('length')" placeholder="Länge" />
+                    <TextInput v-model="batteryData.width" :label="$t('width')" placeholder="Breite" />
+                    <TextInput v-model="batteryData.height" :label="$t('height')" placeholder="Höhe" />
+                    <input @input="handleFileInput" type="file" accept="image/png image/jpeg"
+                        class="file-input max-w-xs" />
+                    <ButtonAdd type="submit" @submit="addBattery()" :label="$t('createBattery')"
+                        tooltip="Neuer Batterietyp erstellen" />
+                </form>
+            </div>
+
         </Card>
         <Card v-model="showBatteryProperties" v-if="showBatteryProperties" :title="$t('properties')" skeleton="true"
             closable="true">
-            <form>
-                <div class="w-full flex justify-center">
-                    <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
-                        class="aspect-square object-cover rounded-md" width="100px" />
-                </div>
-                <TextInput v-model="batteryData.type" :label="$t('type')" placeholder="Typennummer" />
-                <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
-                    :options="batteryManufacturersStore.batteryManufacturers" />
-                <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
-                    :options="batteryChemistriesStore.batteryChemistries" />
-                <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
-                    placeholder="Nominalkapazität" />
-                <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
-                    placeholder="Nominalgewicht" />
-                <TextInput v-model="batteryData.length" :label="$t('length')" placeholder="Länge" />
-                <TextInput v-model="batteryData.width" :label="$t('width')" placeholder="Breite" />
-                <TextInput v-model="batteryData.height" :label="$t('height')" placeholder="Höhe" />
-                <ButtonChange v-on:click="updateBattery()" :label="$t('changeBattery')" tooltip="Batterietyp ändern" />
-                <ButtonDelete v-on:click="deleteBattery()" :label="$t('deleteBattery')" tooltip="Batterietyp Löschen" />
-            </form>
+            <div class="p-2">
+                <form>
+                    <div class="w-full flex justify-center">
+                        <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
+                            class="aspect-square object-cover rounded-md" width="100px" />
+                    </div>
+                    <TextInput v-model="batteryData.type" :label="$t('type')" placeholder="Typennummer" />
+                    <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
+                        :options="batteryManufacturersStore.batteryManufacturers" />
+                    <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
+                        :options="batteryChemistriesStore.batteryChemistries" />
+                    <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
+                        placeholder="Nominalkapazität" />
+                    <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
+                        placeholder="Nominalgewicht" />
+                    <TextInput v-model="batteryData.length" :label="$t('length')" placeholder="Länge" />
+                    <TextInput v-model="batteryData.width" :label="$t('width')" placeholder="Breite" />
+                    <TextInput v-model="batteryData.height" :label="$t('height')" placeholder="Höhe" />
+                    <ButtonChange v-on:click="updateBattery()" :label="$t('changeBattery')"
+                        tooltip="Batterietyp ändern" />
+                    <ButtonDelete v-on:click="deleteBattery()" :label="$t('deleteBattery')"
+                        tooltip="Batterietyp Löschen" />
+                </form>
+            </div>
         </Card>
     </Main>
 </template>

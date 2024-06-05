@@ -5,11 +5,11 @@ const model = defineModel()
 </script>
 
 <template>
-    <div class="rounded-lg p-2.5 shadow-md card ml-2.5 mt-2.5 border-0">
+    <div class="rounded-lg p-2 shadow-md card ml-2.5 mt-2.5 border-0">
         <div class="flex flex-row justify-between items-center">
-            <h2 class="title p-2 font-medium text-2xl">{{ title }}</h2>
-            <Icon v-show="closable" v-on:click="model = false" class="card-icon cursor-pointer" name="fa6-solid:xmark"
-                size="1.5em" />
+            <h2 class="title px-2 font-medium text-2xl">{{ title }}</h2>
+            <Icon v-show="closable" v-on:click="model = false" class="card-icon cursor-pointer pr-2"
+                name="fa6-solid:xmark" size="1.5em" />
         </div>
         <slot v-if="skeleton" />
         <div v-else class="skeleton h-16 w-full"></div>

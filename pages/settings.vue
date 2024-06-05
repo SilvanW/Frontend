@@ -28,8 +28,10 @@ onMounted(async () => {
 <template>
     <Main>
         <Card :title="$t('settings')" :skeleton="true">
-            <Dropdown v-model="selectedLanguage" :label="$t('language')" :options="availableLanguages" />
-            <ButtonChange @click="changeSettings()" :label="$t('changeSettings')" />
+            <div class="p-2">
+                <Dropdown v-model="selectedLanguage" :label="$t('language')" :options="availableLanguages" />
+                <ButtonChange @click="changeSettings()" :label="$t('changeSettings')" />
+            </div>
         </Card>
     </Main>
 </template>
