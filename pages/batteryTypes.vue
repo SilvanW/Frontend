@@ -115,6 +115,7 @@ async function updateBattery() {
 
 async function deleteBattery() {
     batteryTypesStore.deleteBatteryData(batteryData.value.id)
+    batteryTypeImagesStore.deleteBatteryTypeImage(batteryData.value.storageUUID)
 
     showNotification(showBatteryDeleted)
 

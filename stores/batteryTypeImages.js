@@ -45,5 +45,13 @@ export const useBatteryTypeImages = defineStore('batteryTypeImages', () => {
         }
     }
 
-    return { batteryTypeImageReferences, fetchBatteryTypeImages, downloadBatteryTypeImages }
+    async function deleteBatteryTypeImage(uuid) {
+        const { data, error } = await supabase.storage.from("battery_types").remove([`private/${uuid}.png`])
+
+        if (error) {
+            console.log(error)
+        }
+    }
+
+    return { batteryTypeImageReferences, fetchBatteryTypeImages, downloadBatteryTypeImages, deleteBatteryTypeImage }
 })
