@@ -140,20 +140,11 @@ function showNewBatteryCard() {
 
 const { handleFileInput, files } = useFileStorage()
 
-async function storeImage(batteryId) {
-
-    console.log(files.value[0].content)
+async function storeImage(uuid) {
 
     const base64_string = files.value[0].content.split('base64,')[1]
 
-    const { data, error } = await supabase.storage.from("battery_types").upload(`private/${batteryId}.png`, decode(base64_string), {
-        contentType: "image/png"
-    })
-
-    if (error) {
-        console.log(error)
-    }
-
+    batteryTypeImagesStore.uploadBatteryTypeImage(uuid, decode(base64_string))
 }
 
 </script>
@@ -181,6 +172,10 @@ async function storeImage(batteryId) {
         </Card>
         <Card v-model="showNewBattery" v-if="showNewBattery" title="Neue Batterie" skeleton="true" closable="true">
             <form @submit.prevent="addBattery">
+                <div v-if="batteryData.storageUUID" class="w-full flex justify-center">
+                    <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
+                        class="aspect-square object-cover rounded-md" width="100px" />
+                </div>
                 <TextInput v-model="batteryData.type" label="Typ" placeholder="Typennummer" required />
                 <Dropdown v-model="batteryData.manufacturer" label="Manufacturer"
                     :options="batteryManufacturersStore.batteryManufacturers" />

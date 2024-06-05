@@ -1,6 +1,6 @@
 export const useBatteryTypeImages = defineStore('batteryTypeImages', () => {
     const supabase = useSupabaseClient()
-    const batteryTypeImageReferences = ref()
+    const batteryTypeImageReferences = ref({})
 
     async function fetchBatteryTypeImages() {
         const { data, error } = await supabase
@@ -53,5 +53,17 @@ export const useBatteryTypeImages = defineStore('batteryTypeImages', () => {
         }
     }
 
-    return { batteryTypeImageReferences, fetchBatteryTypeImages, downloadBatteryTypeImages, deleteBatteryTypeImage }
+    async function uploadBatteryTypeImage(uuid, imageData) {
+        const { data, error } = await supabase.storage.from("battery_types").upload(`private/${uuid}.png`, imageData, {
+            contentType: "image/png"
+        })
+
+        if (error) {
+            console.log(error)
+        } else {
+            fetchBatteryTypeImages()
+        }
+    }
+
+    return { batteryTypeImageReferences, fetchBatteryTypeImages, downloadBatteryTypeImages, deleteBatteryTypeImage, uploadBatteryTypeImage }
 })
