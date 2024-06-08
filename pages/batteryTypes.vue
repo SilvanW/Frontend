@@ -84,7 +84,6 @@ onMounted(async () => {
     await batteryManufacturersStore.fetchBatteryManufacturers()
     await batteryChemistriesStore.fetchBatteryChemistries()
     await batteryTypeImagesStore.fetchBatteryTypeImages()
-    await getImage()
 });
 
 async function checkBatteryData() {
