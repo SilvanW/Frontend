@@ -34,6 +34,9 @@ const showChangeBatteryPopup = ref(false)
 const showDeleteBatteryPopup = ref(false)
 const showCreateBatteryPopup = ref(false)
 
+// Error Message
+const errorMessage = ref('')
+
 // Initialize Stores
 const batteryTypesStore = useBatteryTypes()
 const batteryManufacturersStore = useBatteryManufacturers()
@@ -81,6 +84,99 @@ onMounted(async () => {
     await batteryTypeImagesStore.fetchBatteryTypeImages()
     await getImage()
 });
+
+async function checkBatteryData() {
+    console.log(batteryData.value)
+    // Check Type
+    if (batteryData.value.type === "") {
+        errorMessage.value = "Type must be defined"
+        return
+    }
+
+    // Check Capacity
+    if (batteryData.value.nominalCapacity === "") {
+        errorMessage.value = "Nominal Capacity must be defined"
+        return
+    }
+
+    if (isNaN(batteryData.value.nominalCapacity)) {
+        errorMessage.value = "Nominal Capacity must be a positve number"
+        return
+    }
+
+    if (batteryData.value.nominalCapacity <= 0) {
+        errorMessage.value = "Nominal Capacity must be a positive number"
+        return
+    }
+
+    // Check Weight
+    if (batteryData.value.nominalWeight === "") {
+        errorMessage.value = "Nominal Weight must be defined"
+        return
+    }
+
+    if (isNaN(batteryData.value.nominalWeight)) {
+        errorMessage.value = "Nominal Weight must be a positive number"
+        return
+    }
+
+    if (batteryData.value.nominalWeight <= 0) {
+        errorMessage.value = "Nominal Weight must be a positive number"
+        return
+    }
+
+    // Check Length
+    if (batteryData.value.length === "") {
+        errorMessage.value = "Length must be defined"
+        return
+    }
+
+    if (isNaN(batteryData.value.length)) {
+        errorMessage.value = "Length must be a positive number"
+        return
+    }
+
+    if (batteryData.value.length <= 0) {
+        errorMessage.value = "Length must be a positive number"
+        return
+    }
+
+    // Check Width
+    if (batteryData.value.width === "") {
+        errorMessage.value = "Width must be defined"
+        return
+    }
+
+    if (isNaN(batteryData.value.width)) {
+        errorMessage.value = "Width must be a positive number"
+        return
+    }
+
+    if (batteryData.value.width <= 0) {
+        errorMessage.value = "Width must be a positive number"
+        return
+    }
+
+    // Check Height
+    if (batteryData.value.height === "") {
+        errorMessage.value = "Height must be defined"
+        return
+    }
+
+    if (isNaN(batteryData.value.height)) {
+        errorMessage.value = "Height must be a positive number"
+        return
+    }
+
+    if (batteryData.value.height <= 0) {
+        errorMessage.value = "Height must be a positive number"
+        return
+    }
+
+    errorMessage.value = ''
+
+    showCreateBatteryPopup.value = true
+}
 
 async function addBattery() {
     batteryData.value.storageUUID = uuidv4()
@@ -189,13 +285,14 @@ async function storeImage(uuid) {
         </Card>
         <Card v-model="showNewBattery" v-if="showNewBattery" :title="$t('newBattery')" skeleton="true" closable="true">
             <div class="p-2">
+                <InputError :text="errorMessage" :condition="errorMessage" />
                 <form @submit.prevent="true">
                     <div v-if="batteryData.storageUUID" class="w-full flex justify-center">
                         <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
                             class="aspect-square object-cover rounded-md" width="100px" />
                     </div>
                     <TextInput v-model="batteryData.type" :label="$t('type')"
-                        :placeholder="$t('placeholders.typeNumber')" required />
+                        :placeholder="$t('placeholders.typeNumber')" />
                     <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
                         :options="batteryManufacturersStore.batteryManufacturers" />
                     <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
@@ -212,7 +309,7 @@ async function storeImage(uuid) {
                         :placeholder="$t('placeholders.height')" />
                     <input @input="handleFileInput" type="file" accept="image/png image/jpeg"
                         class="file-input max-w-xs" />
-                    <ButtonAdd @click="showCreateBatteryPopup = true" :label="$t('createBattery')"
+                    <ButtonAdd @click="checkBatteryData()" :label="$t('createBattery')"
                         :tooltip="$t('tooltips.newBattery')" />
                 </form>
             </div>
