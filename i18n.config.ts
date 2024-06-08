@@ -71,6 +71,11 @@ export default defineI18nConfig(() => ({
                 batteryAdded: 'Batterie erfolgreich hinzugefügt',
                 batteryDeleted: 'Batterie erfolgreich gelöscht',
                 batteryChanged: 'Batterie erfolgreich geändert'
+            },
+            errorMessages: {
+                defined: 'muss definiert sein',
+                positveNumber: 'muss eine positive Zahl sein',
+                imageRequired: 'Bild erforderlich'
             }
         },
         en: {
@@ -143,6 +148,11 @@ export default defineI18nConfig(() => ({
                 batteryAdded: 'Battery successfully added',
                 batteryDeleted: 'Battery successfully deleted',
                 batteryChanged: 'Battery successfully changed'
+            },
+            errorMessages: {
+                defined: 'must be defined',
+                positveNumber: 'must be a positive number',
+                imageRequired: 'Image required'
             }
         }
     }

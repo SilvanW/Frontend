@@ -8,7 +8,7 @@ definePageMeta({
     middleware: ["auth"]
 })
 
-useI18n()
+const { t } = useI18n()
 
 const { handleFileInput, files } = useFileStorage()
 
@@ -77,68 +77,68 @@ function isPositiveNumber(number) {
 function checkBatteryData() {
     // Check Type
     if (batteryData.value.type === "") {
-        errorMessage.value = "Type must be defined"
+        errorMessage.value = `${t('type')} ${t('errorMessages.defined')}`
         return
     }
 
     // Check Capacity
     if (batteryData.value.nominalCapacity === "") {
-        errorMessage.value = "Nominal Capacity must be defined"
+        errorMessage.value = `${t('nominalCapacity')} ${t('errorMessages.defined')}`
         return
     }
 
     if (!isPositiveNumber(batteryData.value.nominalCapacity)) {
-        errorMessage.value = "Nominal Capacity must be a positve number"
+        errorMessage.value = `${t('nominalCapacity')} ${t('errorMessages.positveNumber')}`
         return
     }
 
     // Check Weight
     if (batteryData.value.nominalWeight === "") {
-        errorMessage.value = "Nominal Weight must be defined"
+        errorMessage.value = `${t('nominalWeight')} ${t('errorMessages.defined')}`
         return
     }
 
     if (!isPositiveNumber(batteryData.value.nominalWeight)) {
-        errorMessage.value = "Nominal Weight must be a positive number"
+        errorMessage.value = `${t('nominalWeight')} ${t('errorMessages.positveNumber')}`
         return
     }
 
     // Check Length
     if (batteryData.value.length === "") {
-        errorMessage.value = "Length must be defined"
+        errorMessage.value = `${t('length')} ${t('errorMessages.defined')}`
         return
     }
 
     if (!isPositiveNumber(batteryData.value.length)) {
-        errorMessage.value = "Length must be a positive number"
+        errorMessage.value = `${t('length')} ${t('errorMessages.positveNumber')}`
         return
     }
 
     // Check Width
     if (batteryData.value.width === "") {
-        errorMessage.value = "Width must be defined"
+        errorMessage.value = `${t('width')} ${t('errorMessages.defined')}`
         return
     }
 
     if (!isPositiveNumber(batteryData.value.width)) {
-        errorMessage.value = "Width must be a positive number"
+        errorMessage.value = `${t('width')} ${t('errorMessages.positveNumber')}`
         return
     }
 
     // Check Height
     if (batteryData.value.height === "") {
-        errorMessage.value = "Height must be defined"
+        errorMessage.value = `${t('height')} ${t('errorMessages.defined')}`
         return
     }
 
     if (!isPositiveNumber(batteryData.value.height)) {
-        errorMessage.value = "Height must be a positive number"
+        errorMessage.value = `${t('height')} ${t('errorMessages.positveNumber')}`
         return
     }
 
     // Check Image
     if (files.value[0] === undefined) {
-        errorMessage.value = "Image Required"
+        errorMessage.value = `${t('errorMessages.imageRequired')}`
         return
     }
 
