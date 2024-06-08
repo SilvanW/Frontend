@@ -3,6 +3,8 @@ import { ref } from 'vue'
 
 const supabase = useSupabaseClient()
 
+useI18n()
+
 const logInWithUsername = async () => {
     const { error } = await supabase.auth.signInWithPassword({
         email: email.value,
@@ -33,9 +35,9 @@ definePageMeta({
         <Card title="Login" skeleton="true">
             <InputError :condition="loginInvalid" :text="loginInvalid" />
             <form @submit.prevent="logInWithUsername" class="w-full">
-                <TextInput id="email" type="email" label="Email" placeholder="Email eingeben" v-model="email"
+                <TextInput id="email" type="email" label="Email" :placeholder="$t('enterEmail')" v-model="email"
                     required />
-                <TextInput id="password" type="password" label="Passwort" placeholder="Passwort eingeben"
+                <TextInput id="password" type="password" label="Passwort" :placeholder="$t('enterPassword')"
                     v-model="password" required />
                 <button id="login" class="btn btn-primary w-full" @submit="logInWithUsername()">Login</button>
             </form>
