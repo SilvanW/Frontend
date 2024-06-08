@@ -24,6 +24,7 @@ export default defineI18nConfig(() => ({
             deleteBattery: 'Batterie löschen',
             newBattery: 'Batterie hinzufügen',
             createBattery: 'Batterie erstellen',
+            uploadImage: 'Bild hochladen',
             placeholders: {
                 enterEmail: 'Email eingeben',
                 enterPassword: 'Passwort eingeben',
@@ -95,6 +96,7 @@ export default defineI18nConfig(() => ({
             deleteBattery: 'Delete Battery',
             newBattery: 'Add Battery',
             createBattery: 'Create Battery',
+            uploadImage: 'Upload Image',
             placeholders: {
                 enterEmail: 'Enter email',
                 enterPassword: 'Enter password',

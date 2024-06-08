@@ -300,7 +300,7 @@ async function storeImage(uuid) {
                 <label class="btn btn-neutral my-2 py-2 px-4 w-full">
                     <div class="flex flex-row justify-center items-center">
                         <Icon name="fa6-solid:image" color="white" size="1em"></Icon>
-                        <h5 class="px-1 m-1 text-white">Bild hochladen</h5>
+                        <h5 class="px-1 m-1 text-white">{{ $t('uploadImage') }}</h5>
                     </div>
                     <input @input="handleFileInput" type="file" accept="image/png image/jpeg"
                         class="file-input file-input-xs" style="display: none;" />
