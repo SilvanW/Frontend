@@ -33,7 +33,7 @@ async function logout() {
 			</div>
 			<img src="/Logo-Kyburz.svg" alt="Kyburz Logo" id="logo" />
 		</header>
-		<div class="flex-1 flex flex-row">
+		<div class="flex-1 flex flex-row overflow-auto">
 			<div v-show="showNav" class="sidenav fixed z-10 duration-500 p-2 h-full">
 				<SidenavButton v-model="showNav" icon="fa6-solid:user" :label="$t('myPage')" target-page="/" />
 				<SidenavButton v-model="showNav" icon="fa6-solid:battery-full" :label="$t('batteryTypes')"
