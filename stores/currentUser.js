@@ -28,6 +28,8 @@ export const useCurrentUser = defineStore('user', () => {
         if (error) {
             console.log(error)
         }
+
+        user.value.defaultLanguage = newLanguage
     }
 
     return { user, fetchCurrentUser, updateDefaultLanguage }
