@@ -34,6 +34,14 @@ export default defineI18nConfig(() => ({
                 changeBattery: 'Batterietyp ändern',
                 deleteBattery: 'Batterietyp löschen',
                 changeSettings: 'Änderungen übernehmen'
+            },
+            popups: {
+                changeSettings: {
+                    title: 'Änderungen übernehmen',
+                    message: 'Sollen die Änderungen wirklich übernommen werden?',
+                    decline: 'Nein',
+                    accept: 'Ja'
+                }
             }
         },
         en: {
@@ -68,6 +76,14 @@ export default defineI18nConfig(() => ({
                 changeBattery: 'Change battery type',
                 deleteBattery: 'Delete battery type',
                 changeSettings: 'Apply changes'
+            },
+            popups: {
+                changeSettings: {
+                    title: 'Apply changes',
+                    message: 'Should the changes really be accepted?',
+                    decline: 'No',
+                    accept: 'Yes'
+                }
             }
         }
     }

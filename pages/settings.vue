@@ -39,11 +39,11 @@ onMounted(async () => {
             </div>
         </Card>
     </Main>
-    <Popup v-if="showChangeSettingsPopup" title="Änderungen übernehmen" v-model="showChangeSettingsPopup">
-        <h1>Sollen die Änderungen wirklich übernommen werden?</h1>
+    <Popup v-if="showChangeSettingsPopup" :title="$t('popups.changeSettings.title')" v-model="showChangeSettingsPopup">
+        <h1>{{ $t('popups.changeSettings.message') }}</h1>
         <div class="flex gap-2">
-            <ButtonDecline @click="showChangeSettingsPopup = false" label="Nein" />
-            <ButtonAccept @click="changeSettings" label="Ja" />
+            <ButtonDecline @click="showChangeSettingsPopup = false" :label="$t('popups.changeSettings.decline')" />
+            <ButtonAccept @click="changeSettings" :label="$t('popups.changeSettings.accept')" />
         </div>
     </Popup>
 </template>
