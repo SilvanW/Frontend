@@ -297,7 +297,14 @@ async function storeImage(uuid) {
                 <TextInput v-model="batteryData.width" :label="$t('width')" :placeholder="$t('placeholders.width')" />
                 <TextInput v-model="batteryData.height" :label="$t('height')"
                     :placeholder="$t('placeholders.height')" />
-                <input @input="handleFileInput" type="file" accept="image/png image/jpeg" class="file-input max-w-xs" />
+                <label class="btn btn-neutral my-2 py-2 px-4 w-full">
+                    <div class="flex flex-row justify-center items-center">
+                        <Icon name="fa6-solid:image" color="white" size="1em"></Icon>
+                        <h5 class="px-1 m-1 text-white">Bild hochladen</h5>
+                    </div>
+                    <input @input="handleFileInput" type="file" accept="image/png image/jpeg"
+                        class="file-input file-input-xs" style="display: none;" />
+                </label>
                 <ButtonAdd @click="checkBatteryData()" :label="$t('createBattery')"
                     :tooltip="$t('tooltips.newBattery')" />
             </div>
