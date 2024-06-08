@@ -59,26 +59,6 @@ const batteryData = ref({
     "storageUUID": ''
 })
 
-const dataUrl = ref('')
-
-async function getImage() {
-    const { data, error } = await supabase.storage.from("battery_types").download('private/dd468e46-3458-479f-9aca-1e06a21f1cdf.png')
-
-    if (error) {
-        console.log(error)
-    }
-
-    const reader = new FileReader()
-
-    reader.onload = function (e) {
-        dataUrl.value = e.target.result
-    }
-
-    if (data) {
-        reader.readAsDataURL(data)
-    }
-}
-
 onMounted(async () => {
     await batteryTypesStore.fetchBatteryData()
     await batteryManufacturersStore.fetchBatteryManufacturers()
