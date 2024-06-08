@@ -8,5 +8,13 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  i18n: {
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'lang',
+      alwaysRedirect: true,
+      fallbackLocale: 'de'
+    }
+  },
   ssr: false
 })
