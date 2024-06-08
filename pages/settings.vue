@@ -34,7 +34,8 @@ onMounted(async () => {
         <Card :title="$t('settings')" :skeleton="true">
             <div class="p-2">
                 <Dropdown v-model="selectedLanguage" :label="$t('language')" :options="availableLanguages" />
-                <ButtonChange @click="showChangeSettingsPopup = true" :label="$t('changeSettings')" />
+                <ButtonChange @click="showChangeSettingsPopup = true" :label="$t('changeSettings')"
+                    :tooltip="$t('tooltips.changeSettings')" />
             </div>
         </Card>
     </Main>

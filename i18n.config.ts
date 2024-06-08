@@ -32,7 +32,8 @@ export default defineI18nConfig(() => ({
             tooltips: {
                 newBattery: 'Neuer Batterietyp erstellen',
                 changeBattery: 'Batterietyp ändern',
-                deleteBattery: 'Batterietyp löschen'
+                deleteBattery: 'Batterietyp löschen',
+                changeSettings: 'Änderungen übernehmen'
             }
         },
         en: {
@@ -66,6 +67,7 @@ export default defineI18nConfig(() => ({
                 newBattery: 'Create new battery type',
                 changeBattery: 'Change battery type',
                 deleteBattery: 'Delete battery type',
+                changeSettings: 'Apply changes'
             }
         }
     }
