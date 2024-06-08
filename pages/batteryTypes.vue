@@ -60,15 +60,21 @@ const batteryData = ref({
     "storageUUID": ''
 })
 
-onMounted(async () => {
-    await currentUserStore.fetchCurrentUser()
-    await batteryTypesStore.fetchBatteryData()
-    await batteryManufacturersStore.fetchBatteryManufacturers()
-    await batteryChemistriesStore.fetchBatteryChemistries()
-    await batteryTypeImagesStore.fetchBatteryTypeImages()
-});
+function isPositiveNumber(number) {
+    // Check if number
+    if (isNaN(number)) {
+        return false
+    }
 
-async function checkBatteryData() {
+    // Check if positive
+    if (number <= 0) {
+        return false
+    }
+
+    return true
+}
+
+function checkBatteryData() {
     // Check Type
     if (batteryData.value.type === "") {
         errorMessage.value = "Type must be defined"
@@ -81,13 +87,8 @@ async function checkBatteryData() {
         return
     }
 
-    if (isNaN(batteryData.value.nominalCapacity)) {
+    if (!isPositiveNumber(batteryData.value.nominalCapacity)) {
         errorMessage.value = "Nominal Capacity must be a positve number"
-        return
-    }
-
-    if (batteryData.value.nominalCapacity <= 0) {
-        errorMessage.value = "Nominal Capacity must be a positive number"
         return
     }
 
@@ -97,12 +98,7 @@ async function checkBatteryData() {
         return
     }
 
-    if (isNaN(batteryData.value.nominalWeight)) {
-        errorMessage.value = "Nominal Weight must be a positive number"
-        return
-    }
-
-    if (batteryData.value.nominalWeight <= 0) {
+    if (!isPositiveNumber(batteryData.value.nominalWeight)) {
         errorMessage.value = "Nominal Weight must be a positive number"
         return
     }
@@ -113,12 +109,7 @@ async function checkBatteryData() {
         return
     }
 
-    if (isNaN(batteryData.value.length)) {
-        errorMessage.value = "Length must be a positive number"
-        return
-    }
-
-    if (batteryData.value.length <= 0) {
+    if (!isPositiveNumber(batteryData.value.length)) {
         errorMessage.value = "Length must be a positive number"
         return
     }
@@ -129,12 +120,7 @@ async function checkBatteryData() {
         return
     }
 
-    if (isNaN(batteryData.value.width)) {
-        errorMessage.value = "Width must be a positive number"
-        return
-    }
-
-    if (batteryData.value.width <= 0) {
+    if (!isPositiveNumber(batteryData.value.width)) {
         errorMessage.value = "Width must be a positive number"
         return
     }
@@ -145,12 +131,7 @@ async function checkBatteryData() {
         return
     }
 
-    if (isNaN(batteryData.value.height)) {
-        errorMessage.value = "Height must be a positive number"
-        return
-    }
-
-    if (batteryData.value.height <= 0) {
+    if (!isPositiveNumber(batteryData.value.height)) {
         errorMessage.value = "Height must be a positive number"
         return
     }
@@ -247,6 +228,14 @@ async function storeImage(uuid) {
 
     batteryTypeImagesStore.uploadBatteryTypeImage(uuid, decode(base64_string))
 }
+
+onMounted(async () => {
+    await currentUserStore.fetchCurrentUser()
+    await batteryTypesStore.fetchBatteryData()
+    await batteryManufacturersStore.fetchBatteryManufacturers()
+    await batteryChemistriesStore.fetchBatteryChemistries()
+    await batteryTypeImagesStore.fetchBatteryTypeImages()
+});
 
 </script>
 
