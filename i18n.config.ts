@@ -65,6 +65,11 @@ export default defineI18nConfig(() => ({
                     decline: 'Nein',
                     accept: 'Ja'
                 }
+            },
+            notifications: {
+                batteryAdded: 'Batterie erfolgreich hinzugefügt',
+                batteryDeleted: 'Batterie erfolgreich gelöscht',
+                batteryChanged: 'Batterie erfolgreich geändert'
             }
         },
         en: {
@@ -131,6 +136,11 @@ export default defineI18nConfig(() => ({
                     decline: 'No',
                     accept: 'Yes'
                 }
+            },
+            notifications: {
+                batteryAdded: 'Battery successfully added',
+                batteryDeleted: 'Battery successfully deleted',
+                batteryChanged: 'Battery successfully changed'
             }
         }
     }

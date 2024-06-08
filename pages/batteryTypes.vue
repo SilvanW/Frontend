@@ -261,13 +261,13 @@ async function storeImage(uuid) {
 <template>
     <Main>
         <Transition>
-            <Notification v-if="showBatteryAdded" text="Batterie Hinzugefügt" />
+            <Notification v-if="showBatteryAdded" :text="$t('notifications.batteryAdded')" />
         </Transition>
         <Transition>
-            <Notification v-if="showBatteryDeleted" text="Batterie Gelöscht" />
+            <Notification v-if="showBatteryDeleted" :text="$t('notifications.batteryDeleted')" />
         </Transition>
         <Transition>
-            <Notification v-if="showBatteryUpdated" text="Batterie Geändert" />
+            <Notification v-if="showBatteryUpdated" :text="$t('notifications.batteryChanged')" />
         </Transition>
         <Card :title="$t('batteryList')" skeleton="true">
             <div class="p-2">
