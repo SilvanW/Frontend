@@ -35,10 +35,10 @@ definePageMeta({
         <Card title="Login" skeleton="true">
             <InputError :condition="loginInvalid" :text="loginInvalid" />
             <form @submit.prevent="logInWithUsername" class="w-full">
-                <TextInput id="email" type="email" label="Email" :placeholder="$t('enterEmail')" v-model="email"
-                    required />
-                <TextInput id="password" type="password" label="Passwort" :placeholder="$t('enterPassword')"
-                    v-model="password" required />
+                <TextInput id="email" type="email" label="Email" :placeholder="$t('placeholders.enterEmail')"
+                    v-model="email" required />
+                <TextInput id="password" type="password" label="Passwort"
+                    :placeholder="$t('placeholders.enterPassword')" v-model="password" required />
                 <button id="login" class="btn btn-primary w-full" @submit="logInWithUsername()">Login</button>
             </form>
         </Card>

@@ -25,8 +25,10 @@ export default defineI18nConfig(() => ({
             deleteBattery: 'Batterie löschen',
             newBattery: 'Batterie hinzufügen',
             createBattery: 'Batterie erstellen',
-            enterEmail: 'Email eingeben',
-            enterPassword: 'Passwort eingeben',
+            placeholders: {
+                enterEmail: 'Email eingeben',
+                enterPassword: 'Passwort eingeben',
+            },
             tooltips: {
                 newBattery: 'Neuer Batterietyp erstellen',
                 changeBattery: 'Batterietyp ändern',
@@ -56,8 +58,10 @@ export default defineI18nConfig(() => ({
             deleteBattery: 'Delete Battery',
             newBattery: 'Add Battery',
             createBattery: 'Create Battery',
-            enterEmail: 'Enter email',
-            enterPassword: 'Enter password',
+            placeholders: {
+                enterEmail: 'Enter email',
+                enterPassword: 'Enter password',
+            },
             tooltips: {
                 newBattery: 'Create new battery type',
                 changeBattery: 'Change battery type',
