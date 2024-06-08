@@ -33,18 +33,22 @@ async function logout() {
 			</div>
 			<img src="/Logo-Kyburz.svg" alt="Kyburz Logo" id="logo" />
 		</header>
-		<div v-show="showNav" class="sidenav fixed z-10 overflow-x-hidden duration-500 top-20 p-2">
-			<SidenavButton v-model="showNav" icon="fa6-solid:user" :label="$t('myPage')" target-page="/" />
-			<SidenavButton v-model="showNav" icon="fa6-solid:battery-full" :label="$t('batteryTypes')"
-				target-page="/batteryTypes" />
-			<SidenavButton v-model="showNav" icon="fa6-solid:gear" :label="$t('settings')" target-page="/settings" />
-			<div v-on:click="logout()"
-				class="flex flex-row justify-left items-center p-2 cursor-pointer hover:bg-blue-500 rounded-lg">
-				<Icon name="fa6-solid:arrow-right-from-bracket" color="red" />
-				<h3 class="logout-text font-medium text-xl mx-2 my-0">Logout</h3>
+		<div class="flex-1 flex flex-row">
+			<div v-show="showNav" class="sidenav fixed z-10 duration-500 p-2 h-full">
+				<SidenavButton v-model="showNav" icon="fa6-solid:user" :label="$t('myPage')" target-page="/" />
+				<SidenavButton v-model="showNav" icon="fa6-solid:battery-full" :label="$t('batteryTypes')"
+					target-page="/batteryTypes" />
+				<SidenavButton v-model="showNav" icon="fa6-solid:gear" :label="$t('settings')"
+					target-page="/settings" />
+				<div v-on:click="logout()"
+					class="flex flex-row justify-left items-center p-2 cursor-pointer hover:bg-blue-500 rounded-lg">
+					<Icon name="fa6-solid:arrow-right-from-bracket" color="red" />
+					<h3 class="logout-text font-medium text-xl mx-2 my-0">Logout</h3>
+				</div>
 			</div>
+			<NuxtPage />
 		</div>
-		<NuxtPage />
+
 	</div>
 </template>
 
@@ -63,7 +67,6 @@ header {
 
 .sidenav {
 	background-color: var(--logo_text_color);
-	height: calc(100% - 80px);
 }
 
 #title {
