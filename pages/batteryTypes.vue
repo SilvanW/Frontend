@@ -29,6 +29,11 @@ const showBatteryAdded = ref(false)
 const showBatteryDeleted = ref(false)
 const showBatteryUpdated = ref(false)
 
+// Popups
+const showChangeBatteryPopup = ref(false)
+const showDeleteBatteryPopup = ref(false)
+const showCreateBatteryPopup = ref(false)
+
 // Initialize Stores
 const batteryTypesStore = useBatteryTypes()
 const batteryManufacturersStore = useBatteryManufacturers()
@@ -86,6 +91,8 @@ async function addBattery() {
     showNotification(showBatteryAdded)
 
     showNewBattery.value = false
+
+    showCreateBatteryPopup.value = false
 }
 
 function showBatteryContent(item) {
@@ -113,6 +120,8 @@ async function updateBattery() {
     showNotification(showBatteryUpdated)
 
     showBatteryProperties.value = false
+
+    showChangeBatteryPopup.value = false
 }
 
 async function deleteBattery() {
@@ -122,6 +131,8 @@ async function deleteBattery() {
     showNotification(showBatteryDeleted)
 
     showBatteryProperties.value = false
+
+    showDeleteBatteryPopup.value = false
 }
 
 function showNewBatteryCard() {
@@ -178,7 +189,7 @@ async function storeImage(uuid) {
         </Card>
         <Card v-model="showNewBattery" v-if="showNewBattery" :title="$t('newBattery')" skeleton="true" closable="true">
             <div class="p-2">
-                <form @submit.prevent="addBattery">
+                <form @submit.prevent="true">
                     <div v-if="batteryData.storageUUID" class="w-full flex justify-center">
                         <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
                             class="aspect-square object-cover rounded-md" width="100px" />
@@ -197,7 +208,7 @@ async function storeImage(uuid) {
                     <TextInput v-model="batteryData.height" :label="$t('height')" placeholder="Höhe" />
                     <input @input="handleFileInput" type="file" accept="image/png image/jpeg"
                         class="file-input max-w-xs" />
-                    <ButtonAdd type="submit" @submit="addBattery()" :label="$t('createBattery')"
+                    <ButtonAdd @click="showCreateBatteryPopup = true" :label="$t('createBattery')"
                         tooltip="Neuer Batterietyp erstellen" />
                 </form>
             </div>
@@ -206,7 +217,7 @@ async function storeImage(uuid) {
         <Card v-model="showBatteryProperties" v-if="showBatteryProperties" :title="$t('properties')" skeleton="true"
             closable="true">
             <div class="p-2">
-                <form>
+                <form @submit.prevent="true">
                     <div class="w-full flex justify-center">
                         <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
                             class="aspect-square object-cover rounded-md" width="100px" />
@@ -223,14 +234,35 @@ async function storeImage(uuid) {
                     <TextInput v-model="batteryData.length" :label="$t('length')" placeholder="Länge" />
                     <TextInput v-model="batteryData.width" :label="$t('width')" placeholder="Breite" />
                     <TextInput v-model="batteryData.height" :label="$t('height')" placeholder="Höhe" />
-                    <ButtonChange v-on:click="updateBattery()" :label="$t('changeBattery')"
+                    <ButtonChange v-on:click="showChangeBatteryPopup = true" :label="$t('changeBattery')"
                         tooltip="Batterietyp ändern" />
-                    <ButtonDelete v-on:click="deleteBattery()" :label="$t('deleteBattery')"
+                    <ButtonDelete v-on:click="showDeleteBatteryPopup = true" :label="$t('deleteBattery')"
                         tooltip="Batterietyp Löschen" />
                 </form>
             </div>
         </Card>
     </Main>
+    <Popup v-if="showChangeBatteryPopup" title="Änderungen übernehmen" v-model="showChangeBatteryPopup">
+        <h1>Sollen die Änderungen wirklich übernommen werden?</h1>
+        <div class="flex gap-2">
+            <ButtonDecline @click="showChangeBatteryPopup = false" label="Nein" />
+            <ButtonAccept @click="updateBattery()" label="Ja" />
+        </div>
+    </Popup>
+    <Popup v-if="showDeleteBatteryPopup" title="Batterie löschen" v-model="showDeleteBatteryPopup">
+        <h1>Sollen die Batterie wirklich gelöscht werden?</h1>
+        <div class="flex gap-2">
+            <ButtonDecline @click="showDeleteBatteryPopup = false" label="Nein" />
+            <ButtonAccept @click="deleteBattery()" label="Ja" />
+        </div>
+    </Popup>
+    <Popup v-if="showCreateBatteryPopup" title="Batterie hinzufügen" v-model="showCreateBatteryPopup">
+        <h1>Sollen die Batterie wirklich erstellt werden?</h1>
+        <div class="flex gap-2">
+            <ButtonDecline @click="showCreateBatteryPopup = false" label="Nein" />
+            <ButtonAccept @click="addBattery()" label="Ja" />
+        </div>
+    </Popup>
 </template>
 
 <style scoped>
