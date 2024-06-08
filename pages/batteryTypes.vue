@@ -242,25 +242,25 @@ async function storeImage(uuid) {
             </div>
         </Card>
     </Main>
-    <Popup v-if="showChangeBatteryPopup" title="Änderungen übernehmen" v-model="showChangeBatteryPopup">
-        <h1>Sollen die Änderungen wirklich übernommen werden?</h1>
+    <Popup v-if="showChangeBatteryPopup" :title="$t('popups.changeBattery.title')" v-model="showChangeBatteryPopup">
+        <h1>{{ $t('popups.changeBattery.message') }}</h1>
         <div class="flex gap-2">
-            <ButtonDecline @click="showChangeBatteryPopup = false" label="Nein" />
-            <ButtonAccept @click="updateBattery()" label="Ja" />
+            <ButtonDecline @click="showChangeBatteryPopup = false" :label="$t('popups.changeBattery.decline')" />
+            <ButtonAccept @click="updateBattery()" :label="$t('popups.changeBattery.accept')" />
         </div>
     </Popup>
-    <Popup v-if="showDeleteBatteryPopup" title="Batterie löschen" v-model="showDeleteBatteryPopup">
-        <h1>Sollen die Batterie wirklich gelöscht werden?</h1>
+    <Popup v-if="showDeleteBatteryPopup" :title="$t('popups.deleteBattery.title')" v-model="showDeleteBatteryPopup">
+        <h1>{{ $t('popups.deleteBattery.message') }}</h1>
         <div class="flex gap-2">
-            <ButtonDecline @click="showDeleteBatteryPopup = false" label="Nein" />
-            <ButtonAccept @click="deleteBattery()" label="Ja" />
+            <ButtonDecline @click="showDeleteBatteryPopup = false" :label="$t('popups.deleteBattery.decline')" />
+            <ButtonAccept @click="deleteBattery()" :label="$t('popups.deleteBattery.accept')" />
         </div>
     </Popup>
-    <Popup v-if="showCreateBatteryPopup" title="Batterie hinzufügen" v-model="showCreateBatteryPopup">
-        <h1>Sollen die Batterie wirklich erstellt werden?</h1>
+    <Popup v-if="showCreateBatteryPopup" :title="$t('popups.createBattery.title')" v-model="showCreateBatteryPopup">
+        <h1>{{ $t('popups.createBattery.message') }}</h1>
         <div class="flex gap-2">
-            <ButtonDecline @click="showCreateBatteryPopup = false" label="Nein" />
-            <ButtonAccept @click="addBattery()" label="Ja" />
+            <ButtonDecline @click="showCreateBatteryPopup = false" :label="$t('popups.createBattery.decline')" />
+            <ButtonAccept @click="addBattery()" :label="$t('popups.createBattery.accept')" />
         </div>
     </Popup>
 </template>

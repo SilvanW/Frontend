@@ -41,6 +41,24 @@ export default defineI18nConfig(() => ({
                     message: 'Sollen die Änderungen wirklich übernommen werden?',
                     decline: 'Nein',
                     accept: 'Ja'
+                },
+                changeBattery: {
+                    title: 'Änderungen übernehmen',
+                    message: 'Sollen die Änderungen wirklick übernommen werden?',
+                    decline: 'Nein',
+                    accept: 'Ja',
+                },
+                deleteBattery: {
+                    title: 'Batterie löschen',
+                    message: 'Soll die Batterie wirklich gelöscht werden?',
+                    decline: 'Nein',
+                    accept: 'Ja'
+                },
+                createBattery: {
+                    title: 'Batterie hinzufügen',
+                    message: 'Soll die Batterie wirklich erstellt werden?',
+                    decline: 'Nein',
+                    accept: 'Ja'
                 }
             }
         },
@@ -81,6 +99,24 @@ export default defineI18nConfig(() => ({
                 changeSettings: {
                     title: 'Apply changes',
                     message: 'Should the changes really be accepted?',
+                    decline: 'No',
+                    accept: 'Yes'
+                },
+                changeBattery: {
+                    title: 'Apply changes',
+                    message: 'Should the changes really be accepted?',
+                    decline: 'No',
+                    accept: 'Yes',
+                },
+                deleteBattery: {
+                    title: 'Delete battery',
+                    message: 'Should the battery really be deleted?',
+                    decline: 'No',
+                    accept: 'Yes'
+                },
+                createBattery: {
+                    title: 'Add battery',
+                    message: 'Should the battery really be created?',
                     decline: 'No',
                     accept: 'Yes'
                 }
