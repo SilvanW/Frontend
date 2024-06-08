@@ -13,6 +13,11 @@ function toggleNav() {
 async function logout() {
 	toggleNav()
 	const { error } = await supabase.auth.signOut()
+
+	if (error) {
+		console.log(error)
+	}
+
 	navigateTo("/login")
 }
 
@@ -20,7 +25,7 @@ async function logout() {
 
 <template>
 	<div class="h-screen flex flex-col">
-		<header>
+		<header class="my-2">
 			<div class="flex flex-row justify-center items-center">
 				<Icon v-on:click="toggleNav()" class="burger-icon cursor-pointer" name="fa6-solid:bars" size="2em">
 				</Icon>
@@ -50,7 +55,6 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	min-height: 80px;
 }
 
 .logout-text {
