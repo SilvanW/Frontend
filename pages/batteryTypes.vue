@@ -182,7 +182,7 @@ async function storeImage(uuid) {
                         :image="batteryTypeImagesStore.batteryTypeImageReferences[item.storageUUID]" />
                 </div>
                 <ButtonAdd v-on:click="showNewBatteryCard()" :label="$t('newBattery')"
-                    tooltip="Neuer Batterietyp freigeben">
+                    :tooltip="$t('tooltips.newBattery')">
                 </ButtonAdd>
             </div>
 
@@ -209,7 +209,7 @@ async function storeImage(uuid) {
                     <input @input="handleFileInput" type="file" accept="image/png image/jpeg"
                         class="file-input max-w-xs" />
                     <ButtonAdd @click="showCreateBatteryPopup = true" :label="$t('createBattery')"
-                        tooltip="Neuer Batterietyp erstellen" />
+                        :tooltip="$t('tooltips.newBattery')" />
                 </form>
             </div>
 
@@ -235,9 +235,9 @@ async function storeImage(uuid) {
                     <TextInput v-model="batteryData.width" :label="$t('width')" placeholder="Breite" />
                     <TextInput v-model="batteryData.height" :label="$t('height')" placeholder="Höhe" />
                     <ButtonChange v-on:click="showChangeBatteryPopup = true" :label="$t('changeBattery')"
-                        tooltip="Batterietyp ändern" />
+                        :tooltip="$t('tooltips.changeBattery')" />
                     <ButtonDelete v-on:click="showDeleteBatteryPopup = true" :label="$t('deleteBattery')"
-                        tooltip="Batterietyp Löschen" />
+                        :tooltip="$t('tooltips.deleteBattery')" />
                 </form>
             </div>
         </Card>
