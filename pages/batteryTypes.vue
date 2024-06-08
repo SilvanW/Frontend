@@ -278,64 +278,57 @@ async function storeImage(uuid) {
         <Card v-model="showNewBattery" v-if="showNewBattery" :title="$t('newBattery')" skeleton="true" closable="true">
             <div class="p-2">
                 <InputError :text="errorMessage" :condition="errorMessage" />
-                <form @submit.prevent="true">
-                    <div v-if="batteryData.storageUUID" class="w-full flex justify-center">
-                        <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
-                            class="aspect-square object-cover rounded-md" width="100px" />
-                    </div>
-                    <TextInput v-model="batteryData.type" :label="$t('type')"
-                        :placeholder="$t('placeholders.typeNumber')" />
-                    <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
-                        :options="batteryManufacturersStore.batteryManufacturers" />
-                    <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
-                        :options="batteryChemistriesStore.batteryChemistries" />
-                    <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
-                        :placeholder="$t('placeholders.nominalCapacity')" />
-                    <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
-                        :placeholder="$t('placeholders.nominalWeight')" />
-                    <TextInput v-model="batteryData.length" :label="$t('length')"
-                        :placeholder="$t('placeholders.length')" />
-                    <TextInput v-model="batteryData.width" :label="$t('width')"
-                        :placeholder="$t('placeholders.width')" />
-                    <TextInput v-model="batteryData.height" :label="$t('height')"
-                        :placeholder="$t('placeholders.height')" />
-                    <input @input="handleFileInput" type="file" accept="image/png image/jpeg"
-                        class="file-input max-w-xs" />
-                    <ButtonAdd @click="checkBatteryData()" :label="$t('createBattery')"
-                        :tooltip="$t('tooltips.newBattery')" />
-                </form>
+                <div v-if="batteryData.storageUUID" class="w-full flex justify-center">
+                    <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
+                        class="aspect-square object-cover rounded-md" width="100px" />
+                </div>
+                <TextInput v-model="batteryData.type" :label="$t('type')"
+                    :placeholder="$t('placeholders.typeNumber')" />
+                <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
+                    :options="batteryManufacturersStore.batteryManufacturers" />
+                <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
+                    :options="batteryChemistriesStore.batteryChemistries" />
+                <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
+                    :placeholder="$t('placeholders.nominalCapacity')" />
+                <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
+                    :placeholder="$t('placeholders.nominalWeight')" />
+                <TextInput v-model="batteryData.length" :label="$t('length')"
+                    :placeholder="$t('placeholders.length')" />
+                <TextInput v-model="batteryData.width" :label="$t('width')" :placeholder="$t('placeholders.width')" />
+                <TextInput v-model="batteryData.height" :label="$t('height')"
+                    :placeholder="$t('placeholders.height')" />
+                <input @input="handleFileInput" type="file" accept="image/png image/jpeg" class="file-input max-w-xs" />
+                <ButtonAdd @click="checkBatteryData()" :label="$t('createBattery')"
+                    :tooltip="$t('tooltips.newBattery')" />
             </div>
 
         </Card>
         <Card v-model="showBatteryProperties" v-if="showBatteryProperties" :title="$t('properties')" skeleton="true"
             closable="true">
             <div class="p-2">
-                <form @submit.prevent="true">
-                    <div class="w-full flex justify-center">
-                        <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
-                            class="aspect-square object-cover rounded-md" width="100px" />
-                    </div>
-                    <TextInput v-model="batteryData.type" :label="$t('type')"
-                        :placeholder="$t('placeholders.typeNumber')" />
-                    <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
-                        :options="batteryManufacturersStore.batteryManufacturers" />
-                    <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
-                        :options="batteryChemistriesStore.batteryChemistries" />
-                    <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
-                        :placeholder="$t('placeholders.nominalCapacity')" />
-                    <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
-                        :placeholder="$t('placeholders.nominalWeight')" />
-                    <TextInput v-model="batteryData.length" :label="$t('length')"
-                        :placeholder="$t('placeholders.length')" />
-                    <TextInput v-model="batteryData.width" :label="$t('width')"
-                        :placeholder="$t('placeholders.width')" />
-                    <TextInput v-model="batteryData.height" :label="$t('height')"
-                        :placeholder="$t('placeholders.height')" />
-                    <ButtonChange v-on:click="showChangeBatteryPopup = true" :label="$t('changeBattery')"
-                        :tooltip="$t('tooltips.changeBattery')" />
-                    <ButtonDelete v-on:click="showDeleteBatteryPopup = true" :label="$t('deleteBattery')"
-                        :tooltip="$t('tooltips.deleteBattery')" />
-                </form>
+                <div class="w-full flex justify-center">
+                    <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
+                        class="aspect-square object-cover rounded-md" width="100px" />
+                </div>
+                <TextInput v-model="batteryData.type" :label="$t('type')"
+                    :placeholder="$t('placeholders.typeNumber')" />
+                <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
+                    :options="batteryManufacturersStore.batteryManufacturers" />
+                <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
+                    :options="batteryChemistriesStore.batteryChemistries" />
+                <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
+                    :placeholder="$t('placeholders.nominalCapacity')" />
+                <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
+                    :placeholder="$t('placeholders.nominalWeight')" />
+                <TextInput v-model="batteryData.length" :label="$t('length')"
+                    :placeholder="$t('placeholders.length')" />
+                <TextInput v-model="batteryData.width" :label="$t('width')" :placeholder="$t('placeholders.width')" />
+                <TextInput v-model="batteryData.height" :label="$t('height')"
+                    :placeholder="$t('placeholders.height')" />
+                <ButtonChange v-on:click="showChangeBatteryPopup = true" :label="$t('changeBattery')"
+                    :tooltip="$t('tooltips.changeBattery')" />
+                <ButtonDelete v-on:click="showDeleteBatteryPopup = true" :label="$t('deleteBattery')"
+                    :tooltip="$t('tooltips.deleteBattery')" />
             </div>
         </Card>
     </Main>
