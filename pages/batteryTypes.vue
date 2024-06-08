@@ -10,6 +10,8 @@ definePageMeta({
 
 useI18n()
 
+const { handleFileInput, files } = useFileStorage()
+
 function showNotification(condition, time = 3000) {
     function remove() {
         condition.value = false
@@ -86,7 +88,6 @@ onMounted(async () => {
 });
 
 async function checkBatteryData() {
-    console.log(batteryData.value)
     // Check Type
     if (batteryData.value.type === "") {
         errorMessage.value = "Type must be defined"
@@ -173,6 +174,12 @@ async function checkBatteryData() {
         return
     }
 
+    // Check Image
+    if (files.value[0] === undefined) {
+        errorMessage.value = "Image Required"
+        return
+    }
+
     errorMessage.value = ''
 
     showCreateBatteryPopup.value = true
@@ -234,6 +241,12 @@ async function deleteBattery() {
 function showNewBatteryCard() {
     showNewBattery.value = true
     showBatteryProperties.value = false
+
+    // Reset errorMessage
+    errorMessage.value = ''
+
+    // Delete files in fileStorage (required to check if files uploaded or not)
+    files.value[0] = undefined
     batteryData.value = {
         "id": 0,
         "type": "",
@@ -246,8 +259,6 @@ function showNewBatteryCard() {
         "height": ''
     }
 }
-
-const { handleFileInput, files } = useFileStorage()
 
 async function storeImage(uuid) {
 
