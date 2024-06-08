@@ -27,6 +27,12 @@ export default defineI18nConfig(() => ({
             placeholders: {
                 enterEmail: 'Email eingeben',
                 enterPassword: 'Passwort eingeben',
+                typeNumber: 'Typennummer',
+                nominalCapacity: 'Nominalkapazität',
+                nominalWeight: 'Nominalgewicht',
+                length: 'Länge',
+                width: 'Breite',
+                height: 'Höhe',
             },
             tooltips: {
                 newBattery: 'Neuer Batterietyp erstellen',
@@ -87,6 +93,12 @@ export default defineI18nConfig(() => ({
             placeholders: {
                 enterEmail: 'Enter email',
                 enterPassword: 'Enter password',
+                typeNumber: 'Type number',
+                nominalCapacity: 'Nominal capacity',
+                nominalWeight: 'Nominal weight',
+                length: 'Length',
+                width: 'Width',
+                height: 'Height',
             },
             tooltips: {
                 newBattery: 'Create new battery type',
