@@ -4,7 +4,7 @@ definePageMeta({
     middleware: ["auth"]
 })
 
-const { setLocale } = useI18n()
+useI18n()
 
 // Load currentUser Store
 const currentUserStore = useCurrentUser()
@@ -16,15 +16,13 @@ const showChangeSettingsPopup = ref(false)
 
 async function changeSettings() {
     showChangeSettingsPopup.value = false
-    setLocale(selectedLanguage.value)
-    currentUserStore.updateDefaultLanguage(selectedLanguage.value)
+    await currentUserStore.updateDefaultLanguage(selectedLanguage.value)
 }
 
 const availableLanguages = [{ 'name': 'Deutsch', 'id': 'de' }, { 'name': 'Englisch', 'id': 'en' }]
 
 onMounted(async () => {
-    currentUserStore.fetchCurrentUser()
-    selectedLanguage.value = currentUserStore.user.defaultLanguage
+    await currentUserStore.fetchCurrentUser()
 })
 
 </script>

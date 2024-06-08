@@ -1,5 +1,6 @@
 export const useCurrentUser = defineStore('user', () => {
     const supabase = useSupabaseClient()
+    const { setLocale } = useI18n()
     const user = ref()
 
     // Read Current user from Supabase
@@ -19,6 +20,8 @@ export const useCurrentUser = defineStore('user', () => {
         }
 
         user.value = user_data[0]
+
+        setDisplayLanguage()
     }
 
     // Update Users Default language
@@ -30,7 +33,14 @@ export const useCurrentUser = defineStore('user', () => {
         }
 
         user.value.defaultLanguage = newLanguage
+
+        setDisplayLanguage()
     }
 
-    return { user, fetchCurrentUser, updateDefaultLanguage }
+    // Set Language
+    function setDisplayLanguage() {
+        setLocale(user.value.defaultLanguage)
+    }
+
+    return { user, fetchCurrentUser, updateDefaultLanguage, setDisplayLanguage }
 })

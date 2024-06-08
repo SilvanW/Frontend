@@ -40,6 +40,7 @@ const showCreateBatteryPopup = ref(false)
 const errorMessage = ref('')
 
 // Initialize Stores
+const currentUserStore = useCurrentUser()
 const batteryTypesStore = useBatteryTypes()
 const batteryManufacturersStore = useBatteryManufacturers()
 const batteryChemistriesStore = useBatteryChemistries()
@@ -60,6 +61,7 @@ const batteryData = ref({
 })
 
 onMounted(async () => {
+    await currentUserStore.fetchCurrentUser()
     await batteryTypesStore.fetchBatteryData()
     await batteryManufacturersStore.fetchBatteryManufacturers()
     await batteryChemistriesStore.fetchBatteryChemistries()

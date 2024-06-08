@@ -4,14 +4,13 @@ definePageMeta({
     middleware: ["auth"]
 })
 
-const { setLocale } = useI18n()
+useI18n()
 
 // Initialize Stores
 const currentUserStore = useCurrentUser()
 
 onMounted(async () => {
     await currentUserStore.fetchCurrentUser()
-    setLocale(currentUserStore.user.defaultLanguage)
 });
 </script>
 
