@@ -19,8 +19,29 @@ const model = defineModel()
 <style scoped>
 .card {
     background-color: rgb(225, 225, 225);
-    min-width: 300px;
-    max-width: 400px;
+    width: calc(100% - 2 * 0.625rem);
+    /*subtract 2 times ml-2.5*/
+}
+
+@media (min-width: 600px) {
+    .card {
+        width: calc(calc(100% - 3 * 0.625rem) / 2);
+        /*subtract 3 times ml-2.5*/
+    }
+}
+
+@media (min-width: 1000px) {
+    .card {
+        width: calc(calc(100% - 4 * 0.625rem) / 3);
+        /*subtract 4 times ml-2.5*/
+    }
+}
+
+@media (min-width: 1500px) {
+    .card {
+        width: calc(calc(100% - 6 * 0.625rem) / 5);
+        /*subtract 6 times ml-2.5*/
+    }
 }
 
 .title {
