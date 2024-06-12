@@ -8,6 +8,8 @@ export const useBatteryChemistries = defineStore('batteryChemistries', () => {
 
         if (battery_chemistries_error) {
             console.log(battery_chemistries_error)
+            alert("An unknown error has occurred. Please try again later")
+            return
         }
 
         batteryChemistries.value = battery_chemistries_data

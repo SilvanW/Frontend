@@ -8,6 +8,8 @@ export const useBatteryManufacturers = defineStore('batteryManufacturers', () =>
 
         if (battery_manufacturer_error) {
             console.log(battery_manufacturer_error)
+            alert("An unknown error has occurred. Please try again later")
+            return
         }
 
         batteryManufacturers.value = battery_manufacturer_data

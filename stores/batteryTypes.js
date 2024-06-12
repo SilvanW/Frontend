@@ -19,9 +19,11 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
 
         if (battery_error) {
             console.log(battery_error)
-        } else {
-            batteryTypes.value = battery_data
-        }
+            alert("An unknown error has occurred. Please try again later")
+            return
+        } 
+        
+        batteryTypes.value = battery_data
     }
 
     // Add Data to Supabase
@@ -42,9 +44,12 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
 
         if (error) {
             console.log(error)
+            alert("An unknown error has occurred. Please try again later")
+            return
         }
-
+        
         fetchBatteryTypes()
+        
     }
 
     // Update Data from Supabase
@@ -64,6 +69,8 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
 
         if (error) {
             console.log(error)
+            alert("An unknown error has occurred. Please try again later")
+            return
         }
 
         fetchBatteryTypes()
@@ -76,6 +83,8 @@ export const useBatteryTypes = defineStore('batteryTypes', () => {
 
         if (error) {
             console.log(error)
+            alert("An unknown error has occurred. Please try again later")
+            return
         }
 
         fetchBatteryTypes()

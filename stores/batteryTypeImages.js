@@ -14,15 +14,18 @@ export const useBatteryTypeImages = defineStore('batteryTypeImages', () => {
 
         if (error) {
             console.log(error)
-        } else {
-            // Fill Object with image uuid's
-            let batteryTypeImageObject = {}
-            for (let batteryTypeImage of data) {
-                batteryTypeImageObject[batteryTypeImage.name.split(".")[0]] = ''
-            }
-            batteryTypeImageReferences.value = batteryTypeImageObject
-            downloadBatteryTypeImages()
+            alert("An unknown error has occurred. Please try again later")
+            return
         }
+
+        // Fill Object with image uuid's
+        let batteryTypeImageObject = {}
+        for (let batteryTypeImage of data) {
+            batteryTypeImageObject[batteryTypeImage.name.split(".")[0]] = ''
+        }
+        batteryTypeImageReferences.value = batteryTypeImageObject
+        downloadBatteryTypeImages()
+
     }
 
     async function downloadBatteryTypeImages() {
@@ -31,6 +34,8 @@ export const useBatteryTypeImages = defineStore('batteryTypeImages', () => {
 
             if (error) {
                 console.log(error)
+                alert("An unknown error has occurred. Please try again later")
+                return
             }
 
             const reader = new FileReader()
@@ -50,6 +55,7 @@ export const useBatteryTypeImages = defineStore('batteryTypeImages', () => {
 
         if (error) {
             console.log(error)
+            alert("An unknown error has occurred. Please try again later")
         }
     }
 
@@ -60,9 +66,11 @@ export const useBatteryTypeImages = defineStore('batteryTypeImages', () => {
 
         if (error) {
             console.log(error)
-        } else {
-            fetchBatteryTypeImages()
+            alert("An unknown error has occurred. Please try again later")
+            return
         }
+
+        fetchBatteryTypeImages()
     }
 
     return { batteryTypeImageReferences, fetchBatteryTypeImages, downloadBatteryTypeImages, deleteBatteryTypeImage, uploadBatteryTypeImage }

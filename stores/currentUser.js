@@ -17,6 +17,8 @@ export const useCurrentUser = defineStore('user', () => {
 
         if (user_error) {
             console.log(user_error)
+            alert("An unknown error has occurred. Please try again later")
+            return
         }
 
         user.value = user_data[0]
@@ -30,6 +32,8 @@ export const useCurrentUser = defineStore('user', () => {
 
         if (error) {
             console.log(error)
+            alert("An unknown error has occurred. Please try again later")
+            return
         }
 
         user.value.defaultLanguage = newLanguage
