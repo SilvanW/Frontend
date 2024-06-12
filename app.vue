@@ -1,7 +1,4 @@
 <template>
-  <html data-theme="kyburz">
-
-  </html>
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
