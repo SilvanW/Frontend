@@ -60,6 +60,16 @@ const batteryData = ref({
     "storageUUID": ''
 })
 
+const batteryErrors = ref({
+    type: false,
+    nominalCapacity: false,
+    nominalWeight: false,
+    length: false,
+    width: false,
+    height: false,
+    image: false
+})
+
 function isPositiveNumber(number) {
     // Check if number
     if (isNaN(number)) {
@@ -78,69 +88,102 @@ function checkBatteryData() {
     // Check Type
     if (batteryData.value.type === "") {
         errorMessage.value = `${t('type')} ${t('errorMessages.defined')}`
+        batteryErrors.value.type = true
         return
     }
+
+    // Error should be disabled when checks complete
+    batteryErrors.value.type = false
 
     // Check Capacity
     if (batteryData.value.nominalCapacity === "") {
         errorMessage.value = `${t('nominalCapacity')} ${t('errorMessages.defined')}`
+        batteryErrors.value.nominalCapacity = true
         return
     }
 
     if (!isPositiveNumber(batteryData.value.nominalCapacity)) {
         errorMessage.value = `${t('nominalCapacity')} ${t('errorMessages.positveNumber')}`
+        batteryErrors.value.nominalCapacity = true
         return
     }
+
+    // Error should be disabled when checks complete
+    batteryErrors.value.nominalCapacity = false
 
     // Check Weight
     if (batteryData.value.nominalWeight === "") {
         errorMessage.value = `${t('nominalWeight')} ${t('errorMessages.defined')}`
+        batteryErrors.value.nominalWeight = true
         return
     }
 
     if (!isPositiveNumber(batteryData.value.nominalWeight)) {
         errorMessage.value = `${t('nominalWeight')} ${t('errorMessages.positveNumber')}`
+        batteryErrors.value.nominalWeight = true
         return
     }
+
+    // Error should be disabled when checks complete
+    batteryErrors.value.nominalWeight = false
 
     // Check Length
     if (batteryData.value.length === "") {
         errorMessage.value = `${t('length')} ${t('errorMessages.defined')}`
+        batteryErrors.value.length = true
         return
     }
 
     if (!isPositiveNumber(batteryData.value.length)) {
         errorMessage.value = `${t('length')} ${t('errorMessages.positveNumber')}`
+        batteryErrors.value.length = true
         return
     }
+
+    // Error should be disabled when checks complete
+    batteryErrors.value.length = false
 
     // Check Width
     if (batteryData.value.width === "") {
         errorMessage.value = `${t('width')} ${t('errorMessages.defined')}`
+        batteryErrors.value.width = true
         return
     }
 
     if (!isPositiveNumber(batteryData.value.width)) {
         errorMessage.value = `${t('width')} ${t('errorMessages.positveNumber')}`
+        batteryErrors.value.width = true
         return
     }
+
+    // Error should be disabled when checks complete
+    batteryErrors.value.width = false
 
     // Check Height
     if (batteryData.value.height === "") {
         errorMessage.value = `${t('height')} ${t('errorMessages.defined')}`
+        batteryErrors.value.height = true
         return
     }
 
     if (!isPositiveNumber(batteryData.value.height)) {
         errorMessage.value = `${t('height')} ${t('errorMessages.positveNumber')}`
+        batteryErrors.value.height = true
         return
     }
+
+    // Error should be disabled when checks complete
+    batteryErrors.value.height = false
 
     // Check Image
     if (files.value[0] === undefined) {
         errorMessage.value = `${t('errorMessages.imageRequired')}`
+        batteryErrors.value.image = true
         return
     }
+
+    // Error should be disabled when checks complete
+    batteryErrors.value.image = false
 
     errorMessage.value = ''
 
@@ -271,23 +314,25 @@ onMounted(async () => {
                     <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
                         class="aspect-square object-cover rounded-md" width="100px" />
                 </div>
-                <TextInput v-model="batteryData.type" :label="$t('type')"
-                    :placeholder="$t('placeholders.typeNumber')" />
+                <TextInput v-model="batteryData.type" :label="$t('type')" :placeholder="$t('placeholders.typeNumber')"
+                    :hasError="batteryErrors.type" />
                 <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
                     :options="batteryManufacturersStore.batteryManufacturers" />
                 <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
                     :options="batteryChemistriesStore.batteryChemistries" />
                 <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
-                    :placeholder="$t('placeholders.nominalCapacity')" />
+                    :placeholder="$t('placeholders.nominalCapacity')" :hasError="batteryErrors.nominalCapacity" />
                 <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
-                    :placeholder="$t('placeholders.nominalWeight')" />
-                <TextInput v-model="batteryData.length" :label="$t('length')"
-                    :placeholder="$t('placeholders.length')" />
-                <TextInput v-model="batteryData.width" :label="$t('width')" :placeholder="$t('placeholders.width')" />
-                <TextInput v-model="batteryData.height" :label="$t('height')"
-                    :placeholder="$t('placeholders.height')" />
+                    :placeholder="$t('placeholders.nominalWeight')" :hasError="batteryErrors.nominalWeight" />
+                <TextInput v-model="batteryData.length" :label="$t('length')" :placeholder="$t('placeholders.length')"
+                    :hasError="batteryErrors.length" />
+                <TextInput v-model="batteryData.width" :label="$t('width')" :placeholder="$t('placeholders.width')"
+                    :hasError="batteryErrors.width" />
+                <TextInput v-model="batteryData.height" :label="$t('height')" :placeholder="$t('placeholders.height')"
+                    :hasError="batteryErrors.height" />
                 <TextOutput v-if="files[0]" label="Filename" :value="files[0].name" />
-                <label class="btn btn-neutral my-2 py-2 px-4 w-full">
+                <label v-bind:class="{ 'btn-error': batteryErrors.image }"
+                    class="btn btn-neutral my-2 py-2 px-4 w-full">
                     <div class="flex flex-row justify-center items-center">
                         <Icon name="fa6-solid:image" color="white" size="1em"></Icon>
                         <h5 class="px-1 m-1 text-white">{{ $t('uploadImage') }}</h5>
