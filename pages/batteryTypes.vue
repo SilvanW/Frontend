@@ -84,7 +84,7 @@ function isPositiveNumber(number) {
     return true
 }
 
-function checkBatteryData() {
+function checkBatteryData(popupName) {
     // Check Type
     if (batteryData.value.type === "") {
         errorMessage.value = `${t('type')} ${t('errorMessages.defined')}`
@@ -187,7 +187,11 @@ function checkBatteryData() {
 
     errorMessage.value = ''
 
-    showCreateBatteryPopup.value = true
+    if (popupName === "CreateBatteryPopup") {
+        showCreateBatteryPopup.value = true
+    } else {
+        showChangeBatteryPopup.value = true
+    }
 }
 
 async function addBattery() {
@@ -339,7 +343,7 @@ onMounted(async () => {
                     </div>
                     <input @input="handleFileInput" type="file" accept="image/png image/jpeg" style="display: none;" />
                 </label>
-                <ButtonAdd @click="checkBatteryData()" :label="$t('createBattery')"
+                <ButtonAdd @click="checkBatteryData('CreateBatteryPopup')" :label="$t('createBattery')"
                     :tooltip="$t('tooltips.newBattery')" />
             </div>
 
