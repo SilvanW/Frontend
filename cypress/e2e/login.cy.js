@@ -4,5 +4,6 @@ describe('login', () => {
     cy.get("#email > input").type("silvan.wiedmer@kyburz-switzerland.ch")
     cy.get("#password > input").type("Test123")
     cy.get("#login").click()
+    cy.get('main').should('contain', "Silvan Wiedmer")
   })
 })
