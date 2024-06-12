@@ -9,7 +9,7 @@ useI18n()
 // Load currentUser Store
 const currentUserStore = useCurrentUser()
 
-const selectedLanguage = ref('de')
+const selectedLanguage = ref(false)
 
 // Popup state
 const showChangeSettingsPopup = ref(false)
@@ -23,13 +23,14 @@ const availableLanguages = [{ 'name': 'Deutsch', 'id': 'de' }, { 'name': 'Englis
 
 onMounted(async () => {
     await currentUserStore.fetchCurrentUser()
+    selectedLanguage.value = currentUserStore.user.defaultLanguage
 })
 
 </script>
 
 <template>
     <Main>
-        <Card :title="$t('settings')" :skeleton="true">
+        <Card :title="$t('settings')" :skeleton="selectedLanguage">
             <div class="p-2">
                 <Dropdown v-model="selectedLanguage" :label="$t('language')" :options="availableLanguages" />
                 <ButtonChange @click="showChangeSettingsPopup = true" :label="$t('changeSettings')"
