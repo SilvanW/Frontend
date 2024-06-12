@@ -8,6 +8,7 @@
 useHead({
   htmlAttrs: {
     lang: "de",
+    "data-theme": "kyburz"
   },
   title: 'Octopus',
   link: [

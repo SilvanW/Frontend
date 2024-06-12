@@ -9,6 +9,7 @@ export default {
   ],
   daisyui: {
     themes: [
+      "light",
       {
         kyburz: {
           "primary": "#174198",
