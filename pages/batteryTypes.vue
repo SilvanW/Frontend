@@ -248,11 +248,20 @@ async function deleteBattery() {
 }
 
 function showNewBatteryCard() {
+    // Reset errors
+    errorMessage.value = ''
+    batteryErrors.value = {
+        type: false,
+        nominalCapacity: false,
+        nominalWeight: false,
+        length: false,
+        width: false,
+        height: false,
+        image: false
+    }
+
     showNewBattery.value = true
     showBatteryProperties.value = false
-
-    // Reset errorMessage
-    errorMessage.value = ''
 
     // Delete files in fileStorage (required to check if files uploaded or not)
     files.value[0] = undefined
