@@ -150,7 +150,7 @@ function checkBatteryData() {
 async function addBattery() {
     batteryData.value.storageUUID = uuidv4()
     batteryTypesStore.insertBatteryData(batteryData.value)
-    console.log(batteryData.value.storageUUID)
+
     storeImage(batteryData.value.storageUUID)
 
     showNotification(showBatteryAdded)
@@ -286,13 +286,13 @@ onMounted(async () => {
                 <TextInput v-model="batteryData.width" :label="$t('width')" :placeholder="$t('placeholders.width')" />
                 <TextInput v-model="batteryData.height" :label="$t('height')"
                     :placeholder="$t('placeholders.height')" />
+                <TextOutput v-if="files[0]" label="Filename" :value="files[0].name" />
                 <label class="btn btn-neutral my-2 py-2 px-4 w-full">
                     <div class="flex flex-row justify-center items-center">
                         <Icon name="fa6-solid:image" color="white" size="1em"></Icon>
                         <h5 class="px-1 m-1 text-white">{{ $t('uploadImage') }}</h5>
                     </div>
-                    <input @input="handleFileInput" type="file" accept="image/png image/jpeg"
-                        class="file-input file-input-xs" style="display: none;" />
+                    <input @input="handleFileInput" type="file" accept="image/png image/jpeg" style="display: none;" />
                 </label>
                 <ButtonAdd @click="checkBatteryData()" :label="$t('createBattery')"
                     :tooltip="$t('tooltips.newBattery')" />
