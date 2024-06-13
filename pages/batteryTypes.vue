@@ -175,8 +175,8 @@ function checkBatteryData(popupName) {
     // Error should be disabled when checks complete
     batteryErrors.value.height = false
 
-    // Check Image
-    if (files.value[0] === undefined) {
+    // Check Image (only when new battery gets created)
+    if (files.value[0] === undefined && popupName === "CreateBatteryPopup") {
         errorMessage.value = `${t('errorMessages.imageRequired')}`
         batteryErrors.value.image = true
         return
@@ -223,7 +223,6 @@ function showBatteryContent(item) {
         "height": item.height,
         "storageUUID": item.storageUUID
     }
-
 }
 
 async function updateBattery() {
@@ -323,9 +322,8 @@ onMounted(async () => {
         <Card v-model="showNewBattery" v-if="showNewBattery" :title="$t('newBattery')" skeleton="true" closable="true">
             <div class="p-2">
                 <InputError :text="errorMessage" :condition="errorMessage" />
-                <div v-if="batteryData.storageUUID" class="w-full flex justify-center">
-                    <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
-                        class="aspect-square object-cover rounded-md" width="100px" />
+                <div v-if="files[0]" class="w-full flex justify-center">
+                    <img :src="files[0].content" class="aspect-square object-cover rounded-md" width="100px" />
                 </div>
                 <TextInput v-model="batteryData.type" :label="$t('type')" :placeholder="$t('placeholders.typeNumber')"
                     :hasError="batteryErrors.type" />
@@ -379,7 +377,7 @@ onMounted(async () => {
                 <TextInput v-model="batteryData.width" :label="$t('width')" :placeholder="$t('placeholders.width')" />
                 <TextInput v-model="batteryData.height" :label="$t('height')"
                     :placeholder="$t('placeholders.height')" />
-                <ButtonChange v-on:click="showChangeBatteryPopup = true" :label="$t('changeBattery')"
+                <ButtonChange v-on:click="checkBatteryData('ChangeBatteryPopup')" :label="$t('changeBattery')"
                     :tooltip="$t('tooltips.changeBattery')" />
                 <ButtonDelete v-on:click="showDeleteBatteryPopup = true" :label="$t('deleteBattery')"
                     :tooltip="$t('tooltips.deleteBattery')" />
