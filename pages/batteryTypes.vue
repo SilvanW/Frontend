@@ -208,6 +208,18 @@ async function addBattery() {
 }
 
 function showBatteryContent(item) {
+    // Reset errors
+    errorMessage.value = ''
+    batteryErrors.value = {
+        type: false,
+        nominalCapacity: false,
+        nominalWeight: false,
+        length: false,
+        width: false,
+        height: false,
+        image: false
+    }
+
     showBatteryProperties.value = true
     showNewBattery.value = false
 
@@ -317,7 +329,6 @@ onMounted(async () => {
                     :tooltip="$t('tooltips.newBattery')">
                 </ButtonAdd>
             </div>
-
         </Card>
         <Card v-model="showNewBattery" v-if="showNewBattery" :title="$t('newBattery')" skeleton="true" closable="true">
             <div class="p-2">
@@ -358,25 +369,27 @@ onMounted(async () => {
         <Card v-model="showBatteryProperties" v-if="showBatteryProperties" :title="$t('properties')" skeleton="true"
             closable="true">
             <div class="p-2">
+                <InputError :text="errorMessage" :condition="errorMessage" />
                 <div class="w-full flex justify-center">
                     <img :src="batteryTypeImagesStore.batteryTypeImageReferences[batteryData.storageUUID]"
                         class="aspect-square object-cover rounded-md" width="100px" />
                 </div>
-                <TextInput v-model="batteryData.type" :label="$t('type')"
-                    :placeholder="$t('placeholders.typeNumber')" />
+                <TextInput v-model="batteryData.type" :label="$t('type')" :placeholder="$t('placeholders.typeNumber')"
+                    :hasError="batteryErrors.type" />
                 <Dropdown v-model="batteryData.manufacturer" :label="$t('manufacturer')"
                     :options="batteryManufacturersStore.batteryManufacturers" />
                 <Dropdown v-model="batteryData.cellChemistry" :label="$t('cellChemistry')"
                     :options="batteryChemistriesStore.batteryChemistries" />
                 <TextInput v-model="batteryData.nominalCapacity" :label="$t('nominalCapacity')"
-                    :placeholder="$t('placeholders.nominalCapacity')" />
+                    :placeholder="$t('placeholders.nominalCapacity')" :hasError="batteryErrors.nominalCapacity" />
                 <TextInput v-model="batteryData.nominalWeight" :label="$t('nominalWeight')"
-                    :placeholder="$t('placeholders.nominalWeight')" />
-                <TextInput v-model="batteryData.length" :label="$t('length')"
-                    :placeholder="$t('placeholders.length')" />
-                <TextInput v-model="batteryData.width" :label="$t('width')" :placeholder="$t('placeholders.width')" />
-                <TextInput v-model="batteryData.height" :label="$t('height')"
-                    :placeholder="$t('placeholders.height')" />
+                    :placeholder="$t('placeholders.nominalWeight')" :hasError="batteryErrors.nominalWeight" />
+                <TextInput v-model="batteryData.length" :label="$t('length')" :placeholder="$t('placeholders.length')"
+                    :hasError="batteryErrors.length" />
+                <TextInput v-model="batteryData.width" :label="$t('width')" :placeholder="$t('placeholders.width')"
+                    :hasError="batteryErrors.width" />
+                <TextInput v-model="batteryData.height" :label="$t('height')" :placeholder="$t('placeholders.height')"
+                    :hasError="batteryErrors.height" />
                 <ButtonChange v-on:click="checkBatteryData('ChangeBatteryPopup')" :label="$t('changeBattery')"
                     :tooltip="$t('tooltips.changeBattery')" />
                 <ButtonDelete v-on:click="showDeleteBatteryPopup = true" :label="$t('deleteBattery')"
